@@ -87,7 +87,7 @@ const HospitalDetails: React.FC = () => {
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="relative h-64 md:h-96">
           <img
-            src="/placeholder.svg?height=400&width=800"
+            src="https://medicaldialogues.in/wp-content/uploads/2013/10/1.jpg"
             alt="City General Hospital"
             className="w-full h-full object-cover"
           />
@@ -220,7 +220,7 @@ const HospitalDetails: React.FC = () => {
             </div>
           )}
 
-          {activeTab === "location" && <Map />}
+          {/* {activeTab === "location" && <Map />} */}
 
           {activeTab === "reviews" && (
             <div>

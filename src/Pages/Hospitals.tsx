@@ -46,8 +46,7 @@ export default function HospitalsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOpenNow, setFilterOpenNow] = useState(false);
   const [sortBy, setSortBy] = useState("distance");
-  const navigate=useNavigate();
-
+  const navigate = useNavigate();
 
   const filteredAndSortedHospitals = hospitals
     .filter(
