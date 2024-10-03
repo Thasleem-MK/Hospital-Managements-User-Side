@@ -1,8 +1,7 @@
-"use client";
-
 import { useState } from "react";
 import Navbar from "../Components/Navbar";
 import { Search, MapPin, Clock, Star } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 
 // Mock data for hospitals
 const hospitals = [
@@ -47,6 +46,8 @@ export default function HospitalsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOpenNow, setFilterOpenNow] = useState(false);
   const [sortBy, setSortBy] = useState("distance");
+  const navigate=useNavigate();
+
 
   const filteredAndSortedHospitals = hospitals
     .filter(
@@ -109,6 +110,7 @@ export default function HospitalsPage() {
             <div
               key={hospital.id}
               className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+              onClick={() => navigate(`/services/hospitals/${hospital.id}`)}
             >
               <h2 className="text-xl font-semibold text-green-800 mb-2">
                 {hospital.name}
