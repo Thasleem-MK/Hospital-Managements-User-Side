@@ -5,6 +5,7 @@ import { Hospital, UserRound, Building2, Ambulance } from "lucide-react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Navbar from "../Components/Navbar";
+import { Link } from "react-router-dom";
 
 const features = [
   { name: "Hospitals", icon: Hospital, href: "/services/hospitals" },
@@ -64,14 +65,14 @@ export default function HomePage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {features.map((feature) => (
-            <a key={feature.name} href={feature.href}>
+            <Link key={feature.name} to={feature.href}>
               <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center">
                 <feature.icon className="h-12 w-12 text-green-600 mb-4" />
                 <h3 className="text-lg font-semibold text-green-800">
                   {feature.name}
                 </h3>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </main>
