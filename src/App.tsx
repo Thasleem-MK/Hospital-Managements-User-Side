@@ -3,6 +3,7 @@ import HomePage from "./Pages/Home";
 import HospitalsPage from "./Pages/Hospitals";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
+import HospitalDetails from "./Pages/HospitalDetailes";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/services">
           <Route path="hospitals" element={<HospitalsPage />} />
+          <Route path="hospitals/:id" element={<HospitalDetails />} />
         </Route>
       </Routes>
     </>
