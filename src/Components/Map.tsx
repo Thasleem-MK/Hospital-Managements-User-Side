@@ -1,4 +1,4 @@
-import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
 import Leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 import markerIcon from "../assets/Images/marker-icon.png";
@@ -34,49 +34,59 @@ const userIcon = Leaflet.icon({
   shadowSize: [41, 41],
 });
 
-// interface RoutingProps {
-//   userLocation: [number, number];
-//   hospitalLocation: [number, number];
-// }
-// Component for rendering the route
-// const Routing: React.FC<RoutingProps> = ({
-//   userLocation,
-//   hospitalLocation,
-// }) => {
-//   const map = useMap();
+interface RoutingProps {
+  userLocation: [number, number];
+  hospitalLocation: [number, number];
+}
 
-//   useEffect(() => {
-//     if (!userLocation || !hospitalLocation) return;
+interface CustomRoutingControlOptions
+  extends Leaflet.Routing.RoutingControlOptions {
+  createMarker?: (
+    i: number,
+    waypoint: Leaflet.Routing.Waypoint,
+    n: number
+  ) => Leaflet.Marker;
+}
 
-//     // Add routing control between user and hospital locations
-//     const routingControl = Leaflet.Routing.control({
-//       waypoints: [
-//         Leaflet.latLng(userLocation), // User Location
-//         Leaflet.latLng(hospitalLocation), // Hospital Location
-//       ],
-//       lineOptions: {
-//         styles: [{ color: "blue", weight: 4 }],
-//       },
-//       createMarker: function (i: any, waypoint: any, n: any) {
-//         const markerOptions: L.MarkerOptions = {};
-//         if (i === 0) {
-//           markerOptions.icon = userIcon; // User's icon
-//         } else if (i === n - 1) {
-//           markerOptions.icon = hospitalIcon; // Hospital's icon
-//         }
-//         return Leaflet.marker(waypoint.latLng, markerOptions);
-//       },
-//       routeWhileDragging: true,
-//     }).addTo(map);
+const Routing: React.FC<RoutingProps> = ({
+  userLocation,
+  hospitalLocation,
+}) => {
+  const map = useMap();
 
-//     // Cleanup the control on component unmount
-//     return () => {
-//       map.removeControl(routingControl);
-//     };
-//   }, [map, userLocation, hospitalLocation]);
+  useEffect(() => {
+    if (!userLocation || !hospitalLocation) return;
 
-//   return null;
-// };
+    const routingControl = Leaflet.Routing.control({
+      waypoints: [
+        Leaflet.latLng(userLocation), // User Location
+        Leaflet.latLng(hospitalLocation), // Hospital Location
+      ],
+      lineOptions: {
+        styles: [{ color: "blue", weight: 4 }],
+        extendToWaypoints: true,
+        missingRouteTolerance: 2,
+      },
+      createMarker: (i, waypoint, n) => {
+        const markerOptions: Leaflet.MarkerOptions = {};
+        if (i === 0) {
+          markerOptions.icon = userIcon; // User's icon
+        } else if (i === n - 1) {
+          markerOptions.icon = hospitalIcon; // Hospital's icon
+        }
+        return Leaflet.marker(waypoint.latLng, markerOptions);
+      },
+      routeWhileDragging: true,
+    } as CustomRoutingControlOptions).addTo(map);
+
+    // Cleanup the control on component unmount
+    return () => {
+      map.removeControl(routingControl);
+    };
+  }, [map, userLocation, hospitalLocation]);
+
+  return null;
+};
 
 const Map = () => {
   const [userLocation, setUserLocation] = useState<[number, number] | null>(
@@ -113,12 +123,12 @@ const Map = () => {
           </Marker>
         )}
 
-        {/* {userLocation && hospitalLocation && (
+        {userLocation && hospitalLocation && (
           <Routing
             userLocation={userLocation}
             hospitalLocation={hospitalLocation}
           />
-        )} */}
+        )}
       </MapContainer>
     </div>
   );
