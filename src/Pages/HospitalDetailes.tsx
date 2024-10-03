@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { Phone, Mail, MapPin, Calendar, Star, Send } from "lucide-react";
-import Map from "../Components/Map"
+// import Map from "../Components/Map"
 
 const departments = [
   { name: "Orthopedics", description: "Specializes in musculoskeletal system" },
