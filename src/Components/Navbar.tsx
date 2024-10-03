@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 export default function Navbar() {
   const path = useLocation().pathname;
@@ -11,8 +11,8 @@ export default function Navbar() {
         <ul className="flex space-x-4">
           {["home", "about", "contact"].map((item) => (
             <li key={item}>
-              <a
-                href={item === "home" ? "/" : `/${item}`}
+              <Link
+                to={item === "home" ? "/" : `/${item}`}
                 className={`hover:text-green-200 ${
                   path == "/" && item === "home"
                     ? "font-bold text-green-950"
@@ -22,7 +22,7 @@ export default function Navbar() {
                 }`}
               >
                 {item.charAt(0).toUpperCase() + item.slice(1)}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
