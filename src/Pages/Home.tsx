@@ -9,9 +9,9 @@ import { Link } from "react-router-dom";
 
 const features = [
   { name: "Hospitals", icon: Hospital, href: "/services/hospitals" },
-  { name: "Doctors", icon: UserRound, href: "/doctors" },
-  { name: "Departments", icon: Building2, href: "/departments" },
-  { name: "Ambulance", icon: Ambulance, href: "/ambulance" },
+  { name: "Doctors", icon: UserRound, href: "/services/doctors" },
+  { name: "Departments", icon: Building2, href: "/services/specialties" },
+  { name: "Ambulance", icon: Ambulance, href: "/services/ambulance" },
 ];
 
 const adImages = [

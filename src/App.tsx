@@ -4,6 +4,9 @@ import HospitalsPage from "./Pages/Hospitals";
 import About from "./Pages/About";
 import Contact from "./Pages/Contact";
 import HospitalDetails from "./Pages/HospitalDetailes";
+import DoctorsPage from "./Pages/Doctors";
+import SpecialtiesPage from "./Pages/Specialties";
+import AmbulanceServicesPage from "./Pages/Ambulance-services";
 
 function App() {
   return (
@@ -15,6 +18,9 @@ function App() {
         <Route path="/services">
           <Route path="hospitals" element={<HospitalsPage />} />
           <Route path="hospitals/:id" element={<HospitalDetails />} />
+          <Route path="doctors" element={<DoctorsPage />} />
+          <Route path="specialties" element={<SpecialtiesPage />} />
+          <Route path="ambulance" element={<AmbulanceServicesPage />} />
         </Route>
       </Routes>
     </>
