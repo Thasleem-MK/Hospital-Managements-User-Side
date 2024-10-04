@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { Phone, Mail, MapPin, Calendar, Star, Send } from "lucide-react";
 import Map from "../Components/Map"
+import { useNavigate } from "react-router-dom";
 
-const departments = [
+const specialties = [
   { name: "Orthopedics", description: "Specializes in musculoskeletal system" },
   {
     name: "General Medicine",
@@ -66,6 +67,7 @@ const HospitalDetails: React.FC = () => {
     rating: 0,
     comment: "",
   });
+  const navigate = useNavigate();
 
   const handleReviewSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -111,13 +113,13 @@ const HospitalDetails: React.FC = () => {
             </button>
             <button
               className={`px-4 py-2 font-medium whitespace-nowrap ${
-                activeTab === "departments"
+                activeTab === "specialties"
                   ? "text-green-600 border-b-2 border-green-600"
                   : "text-green-500"
               }`}
-              onClick={() => setActiveTab("departments")}
+              onClick={() => setActiveTab("specialties")}
             >
-              Departments
+              Specialties
             </button>
             <button
               className={`px-4 py-2 font-medium whitespace-nowrap ${
@@ -187,12 +189,15 @@ const HospitalDetails: React.FC = () => {
             </div>
           )}
 
-          {activeTab === "departments" && (
+          {activeTab === "specialties" && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {departments.map((dept, index) => (
+              {specialties.map((dept, index) => (
                 <div
                   key={index}
                   className="border border-green-200 rounded-md p-4 hover:bg-green-50 transition-colors"
+                  onClick={() => {
+                    navigate(`/services/hospitals/3/Orthopedics`);
+                  }}
                 >
                   <h3 className="text-lg font-medium text-green-700">
                     {dept.name}
