@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@types/leaflet-routing-machine": "^3.2.8",
+    "axios": "^1.7.7",
     "leaflet": "^1.9.4",
     "leaflet-routing-machine": "^3.2.12",
     "lucide-react": "^0.447.0",

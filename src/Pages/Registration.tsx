@@ -1,20 +1,13 @@
 import React, { useState } from "react";
-import {
-  Hospital,
-  Mail,
-  Phone,
-  MapPin,
-  Lock,
-  CheckCircle,
-  X,
-} from "lucide-react";
+import { Mail, Phone, Lock, CheckCircle, X, User } from "lucide-react";
+import { Link } from "react-router-dom";
+import { apiClient } from "../Components/Axios";
 
-const HospitalRegistration: React.FC = () => {
+const UserRegistration: React.FC = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     mobile: "",
-    address: "",
     password: "",
     confirmPassword: "",
   });
@@ -22,6 +15,7 @@ const HospitalRegistration: React.FC = () => {
   const [otp, setOtp] = useState("");
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showOtpPopup, setShowOtpPopup] = useState(false);
+  const [random, setRandom] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -33,14 +27,13 @@ const HospitalRegistration: React.FC = () => {
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!formData.name) newErrors.name = "Hospital name is required";
+    if (!formData.name) newErrors.name = "Name is required";
     if (!formData.email) newErrors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(formData.email))
       newErrors.email = "Email is invalid";
     if (!formData.mobile) newErrors.mobile = "Mobile number is required";
     else if (!/^\d{10}$/.test(formData.mobile))
       newErrors.mobile = "Mobile number must be 10 digits";
-    if (!formData.address) newErrors.address = "Address is required";
     if (!formData.password) newErrors.password = "Password is required";
     else if (formData.password.length < 8)
       newErrors.password = "Password must be at least 8 characters";
@@ -54,17 +47,48 @@ const HospitalRegistration: React.FC = () => {
     e.preventDefault();
     if (validateForm()) {
       if (!otpSent) {
-        // Simulating OTP send
         setOtpSent(true);
         setShowOtpPopup(true);
-        // In a real application, you would call an API to send the OTP here
-        console.log("OTP sent to", formData.email);
+        const randomSixDigit = Math.floor(
+          100000 + Math.random() * 900000
+        ).toString();
+        setRandom(randomSixDigit);
+        await apiClient
+          .post(
+            "/api/email",
+            {
+              from: "hostahelthcare@gmail.com",
+              to: formData.email,
+              subject: "OTP VERIFICATION",
+              text: `Otp for Hosta registration is ${randomSixDigit}`,
+            },
+            { withCredentials: true }
+          )
+          .then((result) => {
+            console.log(result);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
       } else {
         // Simulating OTP verification and form submission
-        console.log("Form submitted:", formData);
-        // In a real application, you would call an API to verify OTP and submit the form here
-        alert("Registration successful!");
-        setShowOtpPopup(false);
+        console.log("otp", otp);
+        console.log("random", random);
+
+        if (otp == random) {
+          apiClient.post(
+            "/api/users/registeration",
+            {
+              name: formData.name,
+              email: formData.email,
+              password: formData.password,
+              phone: formData.mobile,
+            },
+            { withCredentials: true }
+          );
+          alert("Registration successful!");
+          setShowOtpPopup(false);
+        }
       }
     }
   };
@@ -73,7 +97,7 @@ const HospitalRegistration: React.FC = () => {
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
         <h2 className="text-3xl font-bold text-green-800 text-center mb-6">
-          Hospital Registration
+          User's Registration
         </h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
@@ -81,10 +105,10 @@ const HospitalRegistration: React.FC = () => {
               htmlFor="name"
               className="block text-sm font-medium text-green-700 mb-1"
             >
-              Hospital Name
+              Name
             </label>
             <div className="relative">
-              <Hospital
+              <User
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-600"
                 size={18}
               />
@@ -95,7 +119,7 @@ const HospitalRegistration: React.FC = () => {
                 value={formData.name}
                 onChange={handleChange}
                 className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                placeholder="Enter hospital name"
+                placeholder="Enter your name"
               />
             </div>
             {errors.name && (
@@ -152,32 +176,6 @@ const HospitalRegistration: React.FC = () => {
             </div>
             {errors.mobile && (
               <p className="text-red-500 text-xs mt-1">{errors.mobile}</p>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="address"
-              className="block text-sm font-medium text-green-700 mb-1"
-            >
-              Address
-            </label>
-            <div className="relative">
-              <MapPin
-                className="absolute left-3 top-3 text-green-600"
-                size={18}
-              />
-              <textarea
-                id="address"
-                name="address"
-                value={formData.address}
-                onChange={handleChange}
-                className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                placeholder="Enter hospital address"
-                rows={3}
-              />
-            </div>
-            {errors.address && (
-              <p className="text-red-500 text-xs mt-1">{errors.address}</p>
             )}
           </div>
           <div>
@@ -241,13 +239,27 @@ const HospitalRegistration: React.FC = () => {
             {otpSent ? "Verify OTP & Register" : "Send OTP"}
           </button>
         </form>
+        <div className="mt-6 text-center">
+          <p className="text-sm text-green-700">
+            Have an account?{" "}
+            <Link
+              to="/login"
+              className="font-medium text-green-600 hover:text-green-500"
+            >
+              Login
+            </Link>
+          </p>
+        </div>
       </div>
 
       {showOtpPopup && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-lg p-6 w-full max-w-md relative">
             <button
-              onClick={() => setShowOtpPopup(false)}
+              onClick={() => {
+                setShowOtpPopup(false);
+                setOtpSent(false);
+              }}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
             >
               <X size={24} />
@@ -272,12 +284,17 @@ const HospitalRegistration: React.FC = () => {
                 placeholder="Enter OTP"
               />
             </div>
-            <button
-              onClick={handleSubmit}
-              className="w-full mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
-            >
-              Verify & Register
-            </button>
+            <Link to={"/login"}>
+              <button
+                onClick={(e) => {
+                  handleSubmit(e);
+                  setOtpSent(false);
+                }}
+                className="w-full mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+              >
+                Verify & Register
+              </button>
+            </Link>
           </div>
         </div>
       )}
@@ -285,4 +302,4 @@ const HospitalRegistration: React.FC = () => {
   );
 };
 
-export default HospitalRegistration;
+export default UserRegistration;
