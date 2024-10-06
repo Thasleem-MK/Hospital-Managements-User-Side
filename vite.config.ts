@@ -9,8 +9,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "Medi-Guide",
-        short_name: "Medi-Guide",
+        name: "Hosta",
+        short_name: "Hosta",
         description: "Your App Description",
         theme_color: "#5d4d28",
         background_color: "#ffffff",
