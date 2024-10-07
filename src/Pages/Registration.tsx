@@ -300,3 +300,122 @@ const UserRegistration: React.FC = () => {
 };
 
 export default UserRegistration;
+
+
+// import React, { useState } from "react";
+// import { useDispatch, useSelector } from "react-redux";
+// import { RootState } from "../Redux/Store";
+// import {
+//   updateFormData,
+//   setOtpSent,
+//   setOtp,
+//   setRandomOtp,
+// } from "../Redux/userRegistration";
+// import { FormData } from "../Redux/userRegistration";
+// import { apiClient } from "../Components/Axios";
+
+// const UserRegistration: React.FC = () => {
+//   const dispatch = useDispatch();
+//   const { formData, otpSent, otp, randomOtp } = useSelector(
+//     (state: RootState) => state.user
+//   );
+//   const [showOtpPopup, setShowOtpPopup] = useState(false);
+
+//   // Handle input change
+//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+//     dispatch(
+//       updateFormData({
+//         field: e.target.name as keyof FormData,
+//         value: e.target.value,
+//       })
+//     );
+//   };
+
+
+//   // Handle form submission
+//   const handleSubmit = (e: React.FormEvent) => {
+//     e.preventDefault();
+//     if (!otpSent) {
+//       const generatedOtp = Math.floor(
+//         100000 + Math.random() * 900000
+//       ).toString();
+//       dispatch(setRandomOtp(generatedOtp));
+//       apiClient.post(
+//         "/api/users/registeration",
+//         {
+//           name: formData.name,
+//           email: formData.email,
+//           password: formData.password,
+//           phone: formData.mobile,
+//         },
+//         { withCredentials: true }
+//       );
+//       //alert(`OTP sent: ${generatedOtp}`); // Simulate OTP sending
+//       dispatch(setOtpSent(true));
+//       setShowOtpPopup(true);
+//     } else if (otp === randomOtp) {
+//       alert("Registration successful!");
+//       setShowOtpPopup(false);
+//     } else {
+//       alert("Invalid OTP");
+//     }
+//   };
+
+//   return (
+//     <div>
+//       <h2>User Registration</h2>
+//       <form onSubmit={handleSubmit}>
+//         <input
+//           type="text"
+//           name="name"
+//           value={formData.name}
+//           onChange={handleChange}
+//           placeholder="Name"
+//         />
+//         <input
+//           type="email"
+//           name="email"
+//           value={formData.email}
+//           onChange={handleChange}
+//           placeholder="Email"
+//         />
+//         <input
+//           type="tel"
+//           name="mobile"
+//           value={formData.mobile}
+//           onChange={handleChange}
+//           placeholder="Mobile"
+//         />
+//         <input
+//           type="password"
+//           name="password"
+//           value={formData.password}
+//           onChange={handleChange}
+//           placeholder="Password"
+//         />
+//         <input
+//           type="password"
+//           name="confirmPassword"
+//           value={formData.confirmPassword}
+//           onChange={handleChange}
+//           placeholder="Confirm Password"
+//         />
+//         <button type="submit">{otpSent ? "Verify OTP" : "Send OTP"}</button>
+//       </form>
+
+//       {showOtpPopup && (
+//         <div>
+//           <h3>Enter OTP</h3>
+//           <input
+//             type="text"
+//             value={otp}
+//             onChange={(e) => dispatch(setOtp(e.target.value))}
+//             placeholder="Enter OTP"
+//           />
+//         </div>
+//       )}
+//     </div>
+//   );
+// };
+
+// export default UserRegistration;
