@@ -72,9 +72,6 @@ const UserRegistration: React.FC = () => {
           });
       } else {
         // Simulating OTP verification and form submission
-        console.log("otp", otp);
-        console.log("random", random);
-
         if (otp == random) {
           apiClient.post(
             "/api/users/registeration",

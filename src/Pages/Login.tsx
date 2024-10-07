@@ -24,8 +24,6 @@ const UserLogin: React.FC = () => {
 
     // Simulating an API call
     setTimeout(() => {
-      console.log(email,password);
-      
       if (email === "test@hospital.com" && password === "12345678") {
         // alert("Login successful!");
         navigate("/dashboard");
@@ -40,7 +38,7 @@ const UserLogin: React.FC = () => {
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
         <h2 className="text-3xl font-bold text-green-800 text-center mb-6">
-          Hospital Login
+          User Login
         </h2>
         {error && (
           <div className="mb-4 p-2 bg-red-100 border border-red-400 text-red-700 rounded flex items-center">
