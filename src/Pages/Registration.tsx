@@ -2,26 +2,32 @@ import React, { useState } from "react";
 import { Mail, Phone, Lock, CheckCircle, X, User } from "lucide-react";
 import { Link } from "react-router-dom";
 import { apiClient } from "../Components/Axios";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../Redux/Store";
+import {
+  updateFormData,
+  sentOtp,
+  setOtp,
+  setRandomOtp,
+  resetForm,
+} from "../Redux/userRegistration";
+import { FormData } from "../Redux/userRegistration";
+import { errorToast, successToast } from "../Components/Toastify";
 
 const UserRegistration: React.FC = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    email: "",
-    mobile: "",
-    password: "",
-    confirmPassword: "",
-  });
-  const [otpSent, setOtpSent] = useState(false);
-  const [otp, setOtp] = useState("");
+  const { formData, otp, otpSent, randomOtp } = useSelector(
+    (state: RootState) => state.userRegistration
+  );
+  const dispatch = useDispatch();
+
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showOtpPopup, setShowOtpPopup] = useState(false);
-  const [random, setRandom] = useState("");
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    dispatch(updateFormData({ field: name as keyof FormData, value: value }));
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
@@ -47,12 +53,14 @@ const UserRegistration: React.FC = () => {
     e.preventDefault();
     if (validateForm()) {
       if (!otpSent) {
-        setOtpSent(true);
+        dispatch(sentOtp(true));
         setShowOtpPopup(true);
+
         const randomSixDigit = Math.floor(
           100000 + Math.random() * 900000
         ).toString();
-        setRandom(randomSixDigit);
+        dispatch(setRandomOtp(randomSixDigit));
+
         await apiClient
           .post(
             "/api/email",
@@ -72,19 +80,30 @@ const UserRegistration: React.FC = () => {
           });
       } else {
         // Simulating OTP verification and form submission
-        if (otp == random) {
-          apiClient.post(
-            "/api/users/registeration",
-            {
-              name: formData.name,
-              email: formData.email,
-              password: formData.password,
-              phone: formData.mobile,
-            },
-            { withCredentials: true }
-          );
-          alert("Registration successful!");
+        if (otp === randomOtp) {
+          apiClient
+            .post(
+              "/api/users/registeration",
+              {
+                name: formData.name,
+                email: formData.email,
+                password: formData.password,
+                phone: formData.mobile,
+              },
+              { withCredentials: true }
+            )
+            .then((result) => {
+              console.log(result);
+              successToast("Registration successful!");
+            })
+            .catch((err) => {
+              errorToast(err.response.data.message);
+            });
+
+          dispatch(resetForm());
           setShowOtpPopup(false);
+        } else {
+          errorToast("Wrong OTP, please try again!");
         }
       }
     }
@@ -255,7 +274,7 @@ const UserRegistration: React.FC = () => {
             <button
               onClick={() => {
                 setShowOtpPopup(false);
-                setOtpSent(false);
+                dispatch(sentOtp(false));
               }}
               className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
             >
@@ -275,8 +294,8 @@ const UserRegistration: React.FC = () => {
               />
               <input
                 type="text"
-                value={otp}
-                onChange={(e) => setOtp(e.target.value)}
+                // value={otp}
+                onChange={(e) => dispatch(setOtp(e.target.value))}
                 className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 placeholder="Enter OTP"
               />
@@ -285,7 +304,7 @@ const UserRegistration: React.FC = () => {
               <button
                 onClick={(e) => {
                   handleSubmit(e);
-                  setOtpSent(false);
+                  dispatch(sentOtp(false));
                 }}
                 className="w-full mt-4 bg-green-600 text-white py-2 px-4 rounded-md hover:bg-green-700 transition-colors focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
               >
@@ -300,122 +319,3 @@ const UserRegistration: React.FC = () => {
 };
 
 export default UserRegistration;
-
-
-// import React, { useState } from "react";
-// import { useDispatch, useSelector } from "react-redux";
-// import { RootState } from "../Redux/Store";
-// import {
-//   updateFormData,
-//   setOtpSent,
-//   setOtp,
-//   setRandomOtp,
-// } from "../Redux/userRegistration";
-// import { FormData } from "../Redux/userRegistration";
-// import { apiClient } from "../Components/Axios";
-
-// const UserRegistration: React.FC = () => {
-//   const dispatch = useDispatch();
-//   const { formData, otpSent, otp, randomOtp } = useSelector(
-//     (state: RootState) => state.user
-//   );
-//   const [showOtpPopup, setShowOtpPopup] = useState(false);
-
-//   // Handle input change
-//   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-//     dispatch(
-//       updateFormData({
-//         field: e.target.name as keyof FormData,
-//         value: e.target.value,
-//       })
-//     );
-//   };
-
-
-//   // Handle form submission
-//   const handleSubmit = (e: React.FormEvent) => {
-//     e.preventDefault();
-//     if (!otpSent) {
-//       const generatedOtp = Math.floor(
-//         100000 + Math.random() * 900000
-//       ).toString();
-//       dispatch(setRandomOtp(generatedOtp));
-//       apiClient.post(
-//         "/api/users/registeration",
-//         {
-//           name: formData.name,
-//           email: formData.email,
-//           password: formData.password,
-//           phone: formData.mobile,
-//         },
-//         { withCredentials: true }
-//       );
-//       //alert(`OTP sent: ${generatedOtp}`); // Simulate OTP sending
-//       dispatch(setOtpSent(true));
-//       setShowOtpPopup(true);
-//     } else if (otp === randomOtp) {
-//       alert("Registration successful!");
-//       setShowOtpPopup(false);
-//     } else {
-//       alert("Invalid OTP");
-//     }
-//   };
-
-//   return (
-//     <div>
-//       <h2>User Registration</h2>
-//       <form onSubmit={handleSubmit}>
-//         <input
-//           type="text"
-//           name="name"
-//           value={formData.name}
-//           onChange={handleChange}
-//           placeholder="Name"
-//         />
-//         <input
-//           type="email"
-//           name="email"
-//           value={formData.email}
-//           onChange={handleChange}
-//           placeholder="Email"
-//         />
-//         <input
-//           type="tel"
-//           name="mobile"
-//           value={formData.mobile}
-//           onChange={handleChange}
-//           placeholder="Mobile"
-//         />
-//         <input
-//           type="password"
-//           name="password"
-//           value={formData.password}
-//           onChange={handleChange}
-//           placeholder="Password"
-//         />
-//         <input
-//           type="password"
-//           name="confirmPassword"
-//           value={formData.confirmPassword}
-//           onChange={handleChange}
-//           placeholder="Confirm Password"
-//         />
-//         <button type="submit">{otpSent ? "Verify OTP" : "Send OTP"}</button>
-//       </form>
-
-//       {showOtpPopup && (
-//         <div>
-//           <h3>Enter OTP</h3>
-//           <input
-//             type="text"
-//             value={otp}
-//             onChange={(e) => dispatch(setOtp(e.target.value))}
-//             placeholder="Enter OTP"
-//           />
-//         </div>
-//       )}
-//     </div>
-//   );
-// };
-
-// export default UserRegistration;

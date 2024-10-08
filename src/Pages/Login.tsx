@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { Mail, Lock, EyeOff, Eye, AlertCircle } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
+import { apiClient } from "../Components/Axios";
+import { successToast } from "../Components/Toastify";
+import { useDispatch } from "react-redux";
+import { updateUserData } from "../Redux/userLogin";
 
 const UserLogin: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -8,6 +12,7 @@ const UserLogin: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,21 +22,31 @@ const UserLogin: React.FC = () => {
       setError("Please enter both email and password.");
       return;
     }
-
-    // Here you would typically make an API call to authenticate
-    // For demonstration, we'll just log the attempt
-    console.log("Login attempt with:", { email, password });
-
-    // Simulating an API call
-    setTimeout(() => {
-      if (email === "test@hospital.com" && password === "12345678") {
-        // alert("Login successful!");
-        navigate("/dashboard");
-        // Redirect or update state as needed
-      } else {
-        setError("Invalid email or password. Please try again.");
-      }
-    }, 1000);
+    await apiClient
+      .post(
+        "/api/users/login",
+        { email: email, password: password },
+        { withCredentials: true }
+      )
+      .then((result) => {
+        successToast("Login successful");
+        const { email, name, phone, password, _id } = result.data.data;
+        dispatch(
+          updateUserData({
+            email: email,
+            name: name,
+            password: password,
+            phone: phone,
+            _id: _id as string,
+            isLogin: true,
+          })
+        );
+        navigate("/");
+      })
+      .catch((err) => {
+        setError(err.response.data.message);
+        console.log(err);
+      });
   };
 
   return (

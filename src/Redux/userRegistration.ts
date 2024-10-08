@@ -28,7 +28,7 @@ const initialState: UserState = {
   randomOtp: "",
 };
 
-const userSlice = createSlice({
+const userRegistrationSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
@@ -38,7 +38,7 @@ const userSlice = createSlice({
     ) => {
       state.formData[action.payload.field] = action.payload.value;
     },
-    setOtpSent: (state, action: PayloadAction<boolean>) => {
+    sentOtp: (state, action: PayloadAction<boolean>) => {
       state.otpSent = action.payload;
     },
     setOtp: (state, action: PayloadAction<string>) => {
@@ -56,6 +56,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { updateFormData, setOtpSent, setOtp, setRandomOtp, resetForm } =
-  userSlice.actions;
-export default userSlice.reducer;
+export const { updateFormData, setOtp, sentOtp, setRandomOtp, resetForm } =
+  userRegistrationSlice.actions;
+export default userRegistrationSlice.reducer;

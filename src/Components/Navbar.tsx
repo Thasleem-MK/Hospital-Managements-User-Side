@@ -1,30 +1,83 @@
+import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { UserCircle, ChevronDown, LogOut } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../Redux/Store";
+import { logoutUser } from "../Redux/userLogin";
 
 export default function Navbar() {
-  const path = useLocation().pathname;
-  console.log(path.slice(1));
+  const { name, isLogin } = useSelector((state: RootState) => state.userLogin);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const { pathname } = useLocation();
+  const dispatch = useDispatch();
+
+  const navItems = [
+    { name: "Home", path: "/" },
+    { name: "About", path: "/about" },
+    { name: "Contact", path: "/contact" },
+  ];
+
+  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
 
   return (
-    <nav className="bg-green-600 text-white p-4">
+    <nav className="bg-green-600 text-white p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         <h1 className="text-2xl font-bold">Hospital Project</h1>
-        <ul className="flex space-x-4">
-          {["home", "about", "contact"].map((item) => (
-            <li key={item}>
+        <ul className="flex space-x-4 items-center">
+          {navItems.map((item) => (
+            <li key={item.name}>
               <Link
-                to={item === "home" ? "/" : `/${item}`}
-                className={`hover:text-green-200 ${
-                  path == "/" && item === "home"
-                    ? "font-bold text-green-950"
-                    : path.slice(1) == item
-                    ? "font-bold text-green-950"
-                    : ""
+                to={item.path}
+                className={`hover:text-green-200 transition-colors ${
+                  pathname === item.path ? "font-bold text-green-950" : ""
                 }`}
               >
-                {item.charAt(0).toUpperCase() + item.slice(1)}
+                {item.name}
               </Link>
             </li>
           ))}
+          {isLogin ? (
+            <li className="relative">
+              <button
+                onClick={toggleDropdown}
+                className="flex items-center space-x-2 hover:text-green-200 focus:outline-none"
+              >
+                <UserCircle className="h-5 w-5" />
+                <span>{name}</span>
+                <ChevronDown className="h-4 w-4" />
+              </button>
+              {isDropdownOpen && (
+                <div className="absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+                  <div
+                    className="py-1"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="options-menu"
+                  >
+                    <button
+                      onClick={() => {
+                        dispatch(logoutUser());
+                        setIsDropdownOpen(false);
+                      }}
+                      className="flex items-center w-full px-4 py-2 text-sm text-left text-red-700 hover:bg-red-100 hover:text-red-900"
+                      role="menuitem"
+                    >
+                      <LogOut className="mr-2 h-4 w-4" /> Logout
+                    </button>
+                  </div>
+                </div>
+              )}
+            </li>
+          ) : (
+            <li>
+              <Link
+                to="/login"
+                className="hover:text-green-200 transition-colors"
+              >
+                Login
+              </Link>
+            </li>
+          )}
         </ul>
       </div>
     </nav>
