@@ -1,15 +1,38 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { UserCircle, ChevronDown, LogOut } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/Store";
-import { logoutUser } from "../Redux/userLogin";
+import { logoutUser, updateUserData } from "../Redux/userLogin";
+import { apiClient } from "./Axios";
 
 export default function Navbar() {
   const { name, isLogin } = useSelector((state: RootState) => state.userLogin);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { pathname } = useLocation();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    const data = async () => {
+      await apiClient
+        .get("/api/users",{withCredentials:true})
+        .then((result) => {
+          const { email, name, phone, password, _id } = result.data.data;
+          dispatch(
+            updateUserData({
+              email: email,
+              name: name,
+              password: password,
+              phone: phone,
+              _id: _id as string,
+              isLogin: true,
+            })
+          );
+        })
+        .catch((err) => console.log("err", err));
+    };
+    data();
+  }, []);
 
   const navItems = [
     { name: "Home", path: "/" },
