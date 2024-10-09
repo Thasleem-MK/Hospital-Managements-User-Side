@@ -15,7 +15,7 @@ export default function Navbar() {
   useEffect(() => {
     const data = async () => {
       await apiClient
-        .get("/api/users",{withCredentials:true})
+        .get("/api/users", { withCredentials: true })
         .then((result) => {
           const { email, name, phone, password, _id } = result.data.data;
           dispatch(
@@ -78,9 +78,15 @@ export default function Navbar() {
                     aria-labelledby="options-menu"
                   >
                     <button
-                      onClick={() => {
-                        dispatch(logoutUser());
-                        setIsDropdownOpen(false);
+                      onClick={async () => {
+                        await apiClient
+                          .post("/users/logout", {}, { withCredentials: true })
+                          .then((result) => {
+                            console.log(result);
+                            dispatch(logoutUser());
+                            setIsDropdownOpen(false);
+                          })
+                          .catch((err) => console.log(err));
                       }}
                       className="flex items-center w-full px-4 py-2 text-sm text-left text-red-700 hover:bg-red-100 hover:text-red-900"
                       role="menuitem"

@@ -10,6 +10,7 @@ import AmbulanceServicesPage from "./Pages/Ambulance-services";
 import DepartmentDoctorsPage from "./Pages/HospitalSpecialtiesDetails";
 import UserRegistration from "./Pages/Registration";
 import UserLogin from "./Pages/Login";
+import PasswordReset from "./Pages/PasswordReset";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/Registration" element={<UserRegistration />} />
         <Route path="/login" element={<UserLogin />} />
+        <Route path="/password" element={<PasswordReset />} />
         <Route path="/services">
           <Route path="hospitals" element={<HospitalsPage />} />
           <Route path="hospitals/:id" element={<HospitalDetails />} />

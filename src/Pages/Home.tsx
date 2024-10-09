@@ -1,6 +1,5 @@
 import Slider from "react-slick";
 import { Hospital, UserRound, Building2, Ambulance } from "lucide-react";
-
 // Import slick carousel CSS (you'll need to install these packages)
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -10,7 +9,7 @@ import { Link } from "react-router-dom";
 const features = [
   { name: "Hospitals", icon: Hospital, href: "/services/hospitals" },
   { name: "Doctors", icon: UserRound, href: "/services/doctors" },
-  { name: "Departments", icon: Building2, href: "/services/specialties" },
+  { name: "Specialties", icon: Building2, href: "/services/specialties" },
   { name: "Ambulance", icon: Ambulance, href: "/services/ambulance" },
 ];
 
@@ -21,7 +20,6 @@ const adImages = [
 ];
 
 export default function HomePage() {
-
   const carouselSettings = {
     dots: true,
     infinite: true,
@@ -36,16 +34,10 @@ export default function HomePage() {
     <div className="min-h-screen bg-green-50">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        <div className="mb-8 bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
+        <div className="mb-8 bg-white p-3 py-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300">
           <Slider {...carouselSettings}>
             {adImages.map((src, index) => (
               <div key={index} className="relative w-full h-64 rounded-lg">
-                {/* <img
-                  src={src}
-                  alt={`Advertisement ${index + 1}`}
-                  className="rounded-lg"
-                  style={{ objectFit: "cover", width: "100%", height: "100%" }}
-                /> */}
                 <div
                   style={{
                     width: "100%",

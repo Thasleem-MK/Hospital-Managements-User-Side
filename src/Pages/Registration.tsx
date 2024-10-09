@@ -13,6 +13,7 @@ import {
 } from "../Redux/userRegistration";
 import { FormData } from "../Redux/userRegistration";
 import { errorToast, successToast } from "../Components/Toastify";
+import { FormInput } from "../Components/Common";
 
 const UserRegistration: React.FC = () => {
   const { formData, otp, otpSent, randomOtp } = useSelector(
@@ -128,13 +129,12 @@ const UserRegistration: React.FC = () => {
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-600"
                 size={18}
               />
-              <input
+              <FormInput
                 type="text"
                 id="name"
                 name="name"
                 value={formData.name}
-                onChange={handleChange}
-                className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                OnChange={handleChange}
                 placeholder="Enter your name"
               />
             </div>
@@ -154,13 +154,12 @@ const UserRegistration: React.FC = () => {
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-600"
                 size={18}
               />
-              <input
+              <FormInput
                 type="email"
                 id="email"
                 name="email"
                 value={formData.email}
-                onChange={handleChange}
-                className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                OnChange={handleChange}
                 placeholder="Enter email address"
               />
             </div>
@@ -180,13 +179,12 @@ const UserRegistration: React.FC = () => {
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-600"
                 size={18}
               />
-              <input
+              <FormInput
                 type="tel"
                 id="mobile"
                 name="mobile"
                 value={formData.mobile}
-                onChange={handleChange}
-                className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                OnChange={handleChange}
                 placeholder="Enter mobile number"
               />
             </div>
@@ -206,13 +204,12 @@ const UserRegistration: React.FC = () => {
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-600"
                 size={18}
               />
-              <input
+              <FormInput
                 type="password"
                 id="password"
                 name="password"
                 value={formData.password}
-                onChange={handleChange}
-                className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                OnChange={handleChange}
                 placeholder="Enter password"
               />
             </div>
@@ -232,13 +229,12 @@ const UserRegistration: React.FC = () => {
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-600"
                 size={18}
               />
-              <input
+              <FormInput
                 type="password"
                 id="confirmPassword"
                 name="confirmPassword"
                 value={formData.confirmPassword}
-                onChange={handleChange}
-                className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                OnChange={handleChange}
                 placeholder="Confirm password"
               />
             </div>
@@ -292,11 +288,9 @@ const UserRegistration: React.FC = () => {
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-600"
                 size={18}
               />
-              <input
+              <FormInput
                 type="text"
-                // value={otp}
-                onChange={(e) => dispatch(setOtp(e.target.value))}
-                className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                OnChange={(e: any) => dispatch(setOtp(e.target.value))}
                 placeholder="Enter OTP"
               />
             </div>

@@ -5,6 +5,7 @@ import { apiClient } from "../Components/Axios";
 import { successToast } from "../Components/Toastify";
 import { useDispatch } from "react-redux";
 import { updateUserData } from "../Redux/userLogin";
+import { FormInput } from "../Components/Common";
 
 const UserLogin: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -74,14 +75,12 @@ const UserLogin: React.FC = () => {
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-600"
                 size={18}
               />
-              <input
+              <FormInput
                 type="email"
                 id="email"
                 value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                OnChange={(e: any) => setEmail(e.target.value)}
                 placeholder="Enter your email"
-                required
               />
             </div>
           </div>
@@ -97,14 +96,12 @@ const UserLogin: React.FC = () => {
                 className="absolute left-3 top-1/2 transform -translate-y-1/2 text-green-600"
                 size={18}
               />
-              <input
+              <FormInput
                 type={showPassword ? "text" : "password"}
                 id="password"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="pl-10 pr-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                OnChange={(e: any) => setPassword(e.target.value)}
                 placeholder="Enter your password"
-                required
               />
               <button
                 type="button"
@@ -118,7 +115,7 @@ const UserLogin: React.FC = () => {
           <div className="flex items-center justify-end">
             <div className="text-sm">
               <Link
-                to="/newpassword"
+                to="/password"
                 className="font-medium text-green-600 hover:text-green-500"
               >
                 Forgot your password?
