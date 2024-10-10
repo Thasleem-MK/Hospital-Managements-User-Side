@@ -29,7 +29,7 @@ export default function Navbar() {
             })
           );
         })
-        .catch((err) => console.log("err", err));
+        .catch((err) => console.log("err in getting user login", err));
     };
     data();
   }, []);
@@ -80,9 +80,12 @@ export default function Navbar() {
                     <button
                       onClick={async () => {
                         await apiClient
-                          .post("/users/logout", {}, { withCredentials: true })
-                          .then((result) => {
-                            console.log(result);
+                          .post(
+                            "/api/users/logout",
+                            {},
+                            { withCredentials: true }
+                          )
+                          .then(() => {
                             dispatch(logoutUser());
                             setIsDropdownOpen(false);
                           })

@@ -1,3 +1,5 @@
+import { ArrowLeft } from "lucide-react";
+
 export const FormInput = ({
   id,
   OnChange,
@@ -24,5 +26,16 @@ export const FormInput = ({
       placeholder={placeholder}
       required
     />
+  );
+};
+
+export const BackButton = ({ OnClick }: { OnClick: any }) => {
+  return (
+    <button
+      onClick={OnClick}
+      className="mr-4 p-2 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition-colors"
+    >
+      <ArrowLeft className="h-6 w-6" />
+    </button>
   );
 };

@@ -63,7 +63,6 @@ export default function HospitalsPage() {
   return (
     <div className="min-h-screen bg-green-50">
       <Navbar />
-
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold text-green-800 mb-6">Hospitals</h1>
 

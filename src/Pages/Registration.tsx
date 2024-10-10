@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Mail, Phone, Lock, CheckCircle, X, User } from "lucide-react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { apiClient } from "../Components/Axios";
 import { useSelector, useDispatch } from "react-redux";
 import { RootState } from "../Redux/Store";
@@ -13,7 +13,7 @@ import {
 } from "../Redux/userRegistration";
 import { FormData } from "../Redux/userRegistration";
 import { errorToast, successToast } from "../Components/Toastify";
-import { FormInput } from "../Components/Common";
+import { BackButton, FormInput } from "../Components/Common";
 
 const UserRegistration: React.FC = () => {
   const { formData, otp, otpSent, randomOtp } = useSelector(
@@ -23,6 +23,7 @@ const UserRegistration: React.FC = () => {
 
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
   const [showOtpPopup, setShowOtpPopup] = useState(false);
+  const navigate = useNavigate();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -113,9 +114,10 @@ const UserRegistration: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <h2 className="text-3xl font-bold text-green-800 text-center mb-6">
-          User's Registration
-        </h2>
+        <div className="mb-6 flex items-center">
+          <BackButton OnClick={() => navigate("/")} />
+          <h2 className="text-3xl font-bold text-green-800">User Login</h2>
+        </div>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label

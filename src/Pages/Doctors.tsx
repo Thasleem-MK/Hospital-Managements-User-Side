@@ -206,7 +206,6 @@
 
 // export default DoctorsPage;
 
-
 import React, { useState, useEffect } from "react";
 import {
   Search,
@@ -214,9 +213,9 @@ import {
   MapPin,
   ChevronDown,
   ChevronUp,
-  ArrowLeft,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { BackButton } from "../Components/Common";
 
 interface Doctor {
   id: number;
@@ -346,12 +345,7 @@ const DoctorsPage: React.FC = () => {
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center mb-6">
-          <button
-            onClick={handleGoBack}
-            className="mr-4 p-2 rounded-full bg-green-100 text-green-600 hover:bg-green-200 transition-colors duration-200"
-          >
-            <ArrowLeft className="h-6 w-6" />
-          </button>
+          <BackButton OnClick={handleGoBack} />
           <h1 className="text-3xl font-bold text-green-800">Our Doctors</h1>
         </div>
 

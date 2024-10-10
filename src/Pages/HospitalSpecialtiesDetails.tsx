@@ -9,6 +9,7 @@ import {
   Phone,
 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
+import { BackButton } from "../Components/Common";
 
 interface Doctor {
   id: number;
@@ -91,9 +92,7 @@ const DepartmentDoctorsPage: React.FC = () => {
   const [showCallModal, setShowCallModal] = useState(false);
   const navigate = useNavigate();
 
-  const department = departments.find(
-    (dept) => dept.name === departmentId
-  );
+  const department = departments.find((dept) => dept.name === departmentId);
 
   const toggleDoctorExpansion = (doctorId: number) => {
     setExpandedDoctor(expandedDoctor === doctorId ? null : doctorId);
@@ -135,14 +134,7 @@ const DepartmentDoctorsPage: React.FC = () => {
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
         <div className="mb-6 flex items-center">
-          <button
-            onClick={() => {
-              navigate("/services/hospitals/3/");
-            }}
-            className="mr-4 p-2 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition-colors"
-          >
-            <ArrowLeft className="h-6 w-6" />
-          </button>
+          <BackButton OnClick={() => navigate("/services/hospitals/3/")} />
           <h1 className="text-3xl font-bold text-green-800">
             {department.name} Department
           </h1>
