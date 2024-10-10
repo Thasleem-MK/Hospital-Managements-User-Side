@@ -45,7 +45,7 @@ export default function Navbar() {
   return (
     <nav className="bg-green-600 text-white p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
-        <h1 className="text-2xl font-bold">Hospital Project</h1>
+        <h1 className="text-2xl font-bold">Hosta</h1>
         <ul className="flex space-x-4 items-center">
           {navItems.map((item) => (
             <li key={item.name}>
