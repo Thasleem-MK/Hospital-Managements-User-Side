@@ -158,15 +158,25 @@ export default function HospitalsPage() {
 
   const isOpenNow = (workingHours: WorkingHours[]) => {
     const now = new Date();
-    const currentDay = now.toLocaleString("en-US", { weekday: "long" });
-    const currentTime = now.toLocaleTimeString("en-US", {
+    const istTime = new Date(now.getTime());
+
+    const currentDay = istTime.toLocaleString("en-US", { weekday: "long" });
+    const currentTime = istTime.toLocaleTimeString("en-US", {
       hour12: false,
       hour: "2-digit",
       minute: "2-digit",
     });
 
     const todayHours = workingHours.find((wh: any) => wh.day === currentDay);
-    if (!todayHours || todayHours.is_holiday) return false;
+
+    if (
+      !todayHours ||
+      todayHours.is_holiday ||
+      !todayHours.opening_time ||
+      !todayHours.closing_time
+    ) {
+      return false;
+    }
 
     return (
       currentTime >= todayHours.opening_time &&
