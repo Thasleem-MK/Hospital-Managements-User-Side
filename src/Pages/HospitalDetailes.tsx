@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { ArrowLeft } from "lucide-react";
 import Map from "../Components/Map";
@@ -10,29 +10,16 @@ import {
   Specialties,
   WorkingHours,
 } from "../Components/HospitalDetailesComponents";
-import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/Store";
-import { Hospital, setHospitalData } from "../Redux/HospitalsData";
-import { apiClient } from "../Components/Axios";
+import { Hospital } from "../Redux/HospitalsData";
+import { useSelector } from "react-redux";
 
 const HospitalDetails: React.FC = () => {
-  const dispatch = useDispatch();
+  const { id } = useParams();
+
   const [activeTab, setActiveTab] = useState("info");
   const navigate = useNavigate();
   const { hospitals } = useSelector((state: RootState) => state.hospitalData);
-  const { id } = useParams();
-
-  useEffect(() => {
-    const getHospitalData = async () => {
-      try {
-        const result = await apiClient.get("/api/hospitals");
-        dispatch(setHospitalData({ data: result.data.data }));
-      } catch (err) {
-        console.error(err);
-      }
-    };
-    getHospitalData();
-  }, [dispatch]);
 
   const hospital = hospitals.find((hospital) => hospital._id === id);
 

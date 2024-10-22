@@ -6,6 +6,7 @@ import { successToast } from "../Components/Toastify";
 import { useDispatch } from "react-redux";
 import { updateUserData } from "../Redux/userData";
 import { BackButton, FormInput } from "../Components/Common";
+import { setHospitalData } from "../Redux/HospitalsData";
 
 const UserLogin: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -45,7 +46,7 @@ const UserLogin: React.FC = () => {
 
         await apiClient
           .get("/api/hospitals")
-          .then((data) => console.log(data))
+          .then((data) => dispatch(setHospitalData({ data: data.data })))
           .catch((err) => console.log(err));
         navigate("/");
       })

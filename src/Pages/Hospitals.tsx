@@ -126,11 +126,11 @@ export default function HospitalsPage() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOpenNow, setFilterOpenNow] = useState(false);
   const [sortBy, setSortBy] = useState("distance");
-  const [loading, setLoading] = useState(true); // Add loading state
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { hospitals = [] } = useSelector(
     (state: RootState) => state.hospitalData
-  ); // Provide default value
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -175,7 +175,7 @@ export default function HospitalsPage() {
   };
 
   if (loading) {
-    return <div>Loading...</div>; // Display loading while data is fetched
+    return <div>Loading...</div>;
   }
 
   const filteredAndSortedHospitals = hospitals
@@ -285,15 +285,16 @@ export default function HospitalsPage() {
               </div>
               <div className="flex items-center text-green-600 mb-2">
                 <Star className="h-4 w-4 mr-1" />
-                {/* // Review System ----------------------------------------------------*/}
                 <span>
-                  {(
-                    hospital.reviews.reduce(
-                      (sum: any, review: any) => sum + review.rating,
-                      0
-                    ) / hospital.reviews.length
-                  ).toFixed(1)}{" "}
-                  / 5.0
+                  {hospital?.reviews && hospital.reviews.length > 0
+                    ? (hospital.reviews.reduce(
+                        (sum, review) => sum + review.rating,
+                        0
+                      ) /
+                        (hospital.reviews.length * 5)) *
+                      5
+                    : 0}
+                  /5
                 </span>
               </div>
               <div className="flex items-center text-green-600 mb-2">

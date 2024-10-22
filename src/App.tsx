@@ -11,8 +11,25 @@ import DepartmentDoctorsPage from "./Pages/HospitalSpecialtiesDetails";
 import UserRegistration from "./Pages/Registration";
 import UserLogin from "./Pages/Login";
 import PasswordReset from "./Pages/PasswordReset";
+import { useEffect } from "react";
+import { apiClient } from "./Components/Axios";
+import { useDispatch } from "react-redux";
+import { setHospitalData } from "./Redux/HospitalsData";
 
 function App() {
+  const dispatch = useDispatch();
+    useEffect(() => {
+      const getHospitalData = async () => {
+        try {
+          const result = await apiClient.get("/api/hospitals");
+          dispatch(setHospitalData({ data: result.data.data }));
+        } catch (err) {
+          console.error(err);
+        }
+      };
+      getHospitalData();
+    }, []);
+  
   return (
     <>
       <Routes>

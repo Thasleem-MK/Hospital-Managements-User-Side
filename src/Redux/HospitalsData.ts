@@ -19,7 +19,7 @@ interface Specialty {
 
 export interface Review {
   _id?: string;
-  user_name: string;
+  user_id: string;
   rating: number;
   comment: string;
   date: string;
@@ -78,9 +78,15 @@ const hospitalSlice = createSlice({
     setHospitalData: (state, action: PayloadAction<{ data: Hospital[] }>) => {
       state.hospitals = action.payload.data;
     },
+    updateHospitalData: (state, action: PayloadAction<{ data: Hospital }>) => {
+      const index = state.hospitals.findIndex(
+        (hospital) => hospital._id === action.payload.data._id
+      );
+      state.hospitals[index] = action.payload.data;
+    },
   },
 });
 
-export const { setHospitalData } = hospitalSlice.actions;
+export const { setHospitalData,updateHospitalData } = hospitalSlice.actions;
 
 export default hospitalSlice.reducer;
