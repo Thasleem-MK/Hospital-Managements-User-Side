@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userRegistrationSlice from "./userRegistration";
-import userLoginSlice from "./userLogin";
+import userLoginSlice from "./userData";
+import hospitalSlice from "./HospitalsData";
 
 export const store = configureStore({
   reducer: {
     userRegistration: userRegistrationSlice,
     userLogin: userLoginSlice,
+    hospitalData: hospitalSlice,
   },
 });
 

@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { apiClient } from "../Components/Axios";
 import { successToast } from "../Components/Toastify";
 import { useDispatch } from "react-redux";
-import { updateUserData } from "../Redux/userLogin";
+import { updateUserData } from "../Redux/userData";
 import { BackButton, FormInput } from "../Components/Common";
 
 const UserLogin: React.FC = () => {
@@ -29,7 +29,7 @@ const UserLogin: React.FC = () => {
         { email: email, password: password },
         { withCredentials: true }
       )
-      .then((result) => {
+      .then(async (result) => {
         successToast("Login successful");
         const { email, name, phone, password, _id } = result.data.data;
         dispatch(
@@ -42,6 +42,11 @@ const UserLogin: React.FC = () => {
             isLogin: true,
           })
         );
+
+        await apiClient
+          .get("/api/hospitals")
+          .then((data) => console.log(data))
+          .catch((err) => console.log(err));
         navigate("/");
       })
       .catch((err) => {
@@ -53,7 +58,7 @@ const UserLogin: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <div className="mb-6 flex items-center">
+        <div className="relative mb-6 flex items-center justify-center">
           <BackButton OnClick={() => navigate("/")} />
           <h2 className="text-3xl font-bold text-green-800">User Login</h2>
         </div>

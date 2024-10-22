@@ -169,14 +169,6 @@ export default function ContactPage() {
               >
                 <Facebook className="h-6 w-6" />
               </a>
-              {/* <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-green-600 hover:text-green-700"
-              >
-                <X className="h-6 w-6" />
-              </a> */}
               <a
                 href="https://instagram.com"
                 target="_blank"

@@ -30,18 +30,22 @@ const PasswordReset: React.FC = () => {
     const generateOtp = Math.floor(100000 + Math.random() * 900000).toString();
     setRandomNumber(generateOtp);
 
-    await apiClient.post(
-      "/api/email",
-      {
-        from: "hostahelthcare@gmail.com",
-        to: formData.email,
-        subject: "Reset Password",
-        text: `Otp for reseting your password is ${generateOtp}`,
-      },
-      { withCredentials: true }
-    );
-    setStep(2);
-    setSuccess("OTP sent to your email address.");
+    await apiClient
+      .post(
+        "/api/email",
+        {
+          from: "hostahelthcare@gmail.com",
+          to: formData.email,
+          subject: "Reset Password",
+          text: `Otp for reseting your password is ${generateOtp}`,
+        },
+        { withCredentials: true }
+      )
+      .then(() => {
+        setStep(2);
+        setSuccess("OTP sent to your email address.");
+      })
+      .catch((err) => console.log(err));
   };
 
   const handleOtpSubmit = (e: React.FormEvent) => {
@@ -244,7 +248,7 @@ const PasswordReset: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <div className="mb-6 flex items-center">
+        <div className="relative mb-6 flex items-center justify-center">
           <BackButton OnClick={() => navigate("/login")} />
           <h2 className="text-3xl font-bold text-green-800">Reset Password</h2>
         </div>

@@ -1,40 +1,53 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "leaflet/dist/leaflet.css";
 import { ArrowLeft } from "lucide-react";
 import Map from "../Components/Map";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   Button,
   Info,
-  Review,
+  ReviewComponent,
   Specialties,
   WorkingHours,
 } from "../Components/HospitalDetailesComponents";
-
-interface Review {
-  id: number;
-  name: string;
-  rating: number;
-  comment: string;
-  date: string;
-}
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../Redux/Store";
+import { Hospital, setHospitalData } from "../Redux/HospitalsData";
+import { apiClient } from "../Components/Axios";
 
 const HospitalDetails: React.FC = () => {
+  const dispatch = useDispatch();
   const [activeTab, setActiveTab] = useState("info");
   const navigate = useNavigate();
+  const { hospitals } = useSelector((state: RootState) => state.hospitalData);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const getHospitalData = async () => {
+      try {
+        const result = await apiClient.get("/api/hospitals");
+        dispatch(setHospitalData({ data: result.data.data }));
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getHospitalData();
+  }, [dispatch]);
+
+  const hospital = hospitals.find((hospital) => hospital._id === id);
 
   return (
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="relative h-64 md:h-96">
           <img
-            src="https://medicaldialogues.in/wp-content/uploads/2013/10/1.jpg"
-            alt="City General Hospital"
+            src={hospital?.image.imageUrl}
+            alt={hospital?.name}
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
           <h1 className="absolute bottom-4 left-4 text-3xl md:text-4xl font-bold text-white">
-            City General Hospital
+            {hospital?.name}
           </h1>
           <button
             onClick={() => navigate("/services/hospitals")}
@@ -78,15 +91,21 @@ const HospitalDetails: React.FC = () => {
             />
           </div>
 
-          {activeTab === "info" && <Info />}
+          {activeTab === "info" && <Info hospital={hospital as Hospital} />}
 
-          {activeTab === "specialties" && <Specialties />}
+          {activeTab === "specialties" && (
+            <Specialties hospital={hospital as Hospital} />
+          )}
 
-          {activeTab === "hours" && <WorkingHours />}
+          {activeTab === "hours" && (
+            <WorkingHours hospital={hospital as Hospital} />
+          )}
 
-          {activeTab === "location" && <Map />}
+          {activeTab === "location" && <Map hospital={hospital as Hospital} />}
 
-          {activeTab === "reviews" && <Review />}
+          {activeTab === "reviews" && (
+            <ReviewComponent hospital={hospital as Hospital} />
+          )}
         </div>
       </div>
     </div>

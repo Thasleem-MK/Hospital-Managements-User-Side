@@ -1,6 +1,7 @@
 import { Calendar, Mail, MapPin, Phone, Send, Star } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Hospital, Review } from "../Redux/HospitalsData";
 
 // Button for Information, Specialties, Hours, Location, Review
 export const Button = ({
@@ -29,22 +30,22 @@ export const Button = ({
 };
 
 // Information window
-export const Info = () => {
+export const Info = ({ hospital }: { hospital: Hospital }) => {
   // const averageRating =
   //   reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length;
   return (
     <div className="space-y-4">
       <div className="flex items-center">
         <MapPin className="h-5 w-5 text-green-600 mr-2" />
-        <span>123 Hospital Street, New York, NY 10001</span>
+        <span>{hospital?.address}</span>
       </div>
       <div className="flex items-center">
         <Phone className="h-5 w-5 text-green-600 mr-2" />
-        <span>(123) 456-7890</span>
+        <span> {hospital?.phone} </span>
       </div>
       <div className="flex items-center">
         <Mail className="h-5 w-5 text-green-600 mr-2" />
-        <span>info@citygeneralhospital.com</span>
+        <span>{hospital?.email}</span>
       </div>
       <div className="flex items-center">
         <Star className="h-5 w-5 text-green-600 mr-2" />
@@ -55,52 +56,23 @@ export const Info = () => {
       </div>
       <div className="mt-6">
         <h3 className="text-xl font-semibold text-green-700 mb-2">About Us</h3>
-        <p className="text-green-600">
-          City General Hospital is a leading healthcare institution committed to
-          providing exceptional medical care to our community. With
-          state-of-the-art facilities and a team of dedicated healthcare
-          professionals, we strive to deliver compassionate and comprehensive
-          treatment to all our patients.
-        </p>
+        <p className="text-green-600">{hospital?.about}</p>
       </div>
     </div>
   );
 };
 
 // Specialties window
-export const Specialties = () => {
+export const Specialties = ({ hospital }: { hospital: Hospital }) => {
   const navigate = useNavigate();
-  const specialties = [
-    {
-      name: "Orthopedics",
-      description: "Specializes in musculoskeletal system",
-    },
-    {
-      name: "General Medicine",
-      description: "Provides primary healthcare services",
-    },
-    {
-      name: "Cardiology",
-      description: "Focuses on heart and cardiovascular system",
-    },
-    {
-      name: "Pediatrics",
-      description: "Specializes in medical care for children",
-    },
-    {
-      name: "Neurology",
-      description: "Deals with disorders of the nervous system",
-    },
-  ];
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-      {specialties.map((dept, index) => (
+      {hospital?.specialties.map((dept, index) => (
         <div
           key={index}
           className="border border-green-200 rounded-md p-4 hover:bg-green-50 transition-colors"
           onClick={() => {
-            navigate(`/services/hospitals/3/Orthopedics`);
+            navigate(`/services/hospitals/${hospital?._id}/${dept.name}`);
           }}
         >
           <h3 className="text-lg font-medium text-green-700">{dept.name}</h3>
@@ -112,20 +84,17 @@ export const Specialties = () => {
 };
 
 //Working Houres
-export const WorkingHours = () => {
-  const workingHours = [
-    { day: "Monday", hours: "8:00 AM - 8:00 PM" },
-    { day: "Tuesday", hours: "8:00 AM - 8:00 PM" },
-    { day: "Wednesday", hours: "8:00 AM - 8:00 PM" },
-    { day: "Thursday", hours: "8:00 AM - 8:00 PM" },
-    { day: "Friday", hours: "8:00 AM - 8:00 PM" },
-    { day: "Saturday", hours: "9:00 AM - 5:00 PM" },
-    { day: "Sunday", hours: "Closed" },
-  ];
+export function convertTo12HourFormat(time24: string): string {
+  let [hours, minutes] = time24.split(":").map(Number);
+  const period = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12 || 12;
+  return `${hours}:${minutes.toString().padStart(2, "0")} ${period}`;
+}
 
+export const WorkingHours = ({ hospital }: { hospital: Hospital }) => {
   return (
     <div className="space-y-2">
-      {workingHours.map((day, index) => (
+      {hospital.working_hours.map((day, index) => (
         <div
           key={index}
           className="flex items-center justify-between py-2 border-b border-green-100 last:border-b-0"
@@ -134,54 +103,33 @@ export const WorkingHours = () => {
             <Calendar className="h-4 w-4 mr-2" />
             {day.day}
           </span>
-          <span className="text-green-600">{day.hours}</span>
+          <span className="text-green-600">
+            {day.is_holiday
+              ? "Holiday"
+              : `${convertTo12HourFormat(
+                  day.opening_time
+                )}${" - "}${convertTo12HourFormat(day.closing_time)}`}
+          </span>
         </div>
       ))}
     </div>
   );
 };
 
-// Review window
-interface Review {
-  id: number;
-  name: string;
-  rating: number;
-  comment: string;
-  date: string;
-};
-const initialReviews: Review[] = [
-  {
-    id: 1,
-    name: "John Doe",
-    rating: 5,
-    comment: "Excellent care and friendly staff!",
-    date: "2023-05-15",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    rating: 4,
-    comment: "Good experience overall, but wait times could be improved.",
-    date: "2023-05-10",
-  },
-];
-export const Review = () => {
-  const [reviews, setReviews] = useState<Review[]>(initialReviews);
-  const [newReview, setNewReview] = useState({
-    name: "",
+// Review windo
+export const ReviewComponent = ({ hospital }: { hospital: Hospital }) => {
+  // const [reviews, setReviews] = useState<Review[]>();
+  const [newReview, setNewReview] = useState<Review>({
+    user_name: "",
     rating: 0,
     comment: "",
+    date: "",
   });
+
   const handleReviewSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const currentDate = new Date().toISOString().split("T")[0];
-    const newReviewWithId: Review = {
-      ...newReview,
-      id: reviews.length + 1,
-      date: currentDate,
-    };
-    setReviews([newReviewWithId, ...reviews]);
-    setNewReview({ name: "", rating: 0, comment: "" });
+
+    setNewReview({ user_name: "", rating: 0, comment: "", date: "" });
   };
   return (
     <div>
@@ -203,9 +151,9 @@ export const Review = () => {
           <input
             type="text"
             id="name"
-            value={newReview.name}
+            value={newReview.user_name}
             onChange={(e) =>
-              setNewReview({ ...newReview, name: e.target.value })
+              setNewReview({ ...newReview, user_name: e.target.value })
             }
             required
             className="w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
@@ -254,10 +202,12 @@ export const Review = () => {
         </button>
       </form>
       <div className="space-y-4">
-        {reviews.map((review) => (
-          <div key={review.id} className="border-b border-green-100 pb-4">
+        {hospital.reviews.map((review) => (
+          <div key={review._id} className="border-b border-green-100 pb-4">
             <div className="flex items-center justify-between mb-2">
-              <span className="font-medium text-green-700">{review.name}</span>
+              <span className="font-medium text-green-700">
+                {review.user_name}
+              </span>
               <span className="text-sm text-green-600">{review.date}</span>
             </div>
             <div className="flex items-center mb-2">

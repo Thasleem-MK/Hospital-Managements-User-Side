@@ -133,7 +133,7 @@ const DepartmentDoctorsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="mb-6 flex items-center">
+        <div className="relative mb-6 flex items-center justify-center-">
           <BackButton OnClick={() => navigate("/services/hospitals/3/")} />
           <h1 className="text-3xl font-bold text-green-800">
             {department.name} Department

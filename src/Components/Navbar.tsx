@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { UserCircle, ChevronDown, LogOut } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/Store";
-import { logoutUser, updateUserData } from "../Redux/userLogin";
+import { logoutUser, updateUserData } from "../Redux/userData";
 import { apiClient } from "./Axios";
 
 export default function Navbar() {

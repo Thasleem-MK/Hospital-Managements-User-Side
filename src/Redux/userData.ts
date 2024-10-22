@@ -1,6 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// UserData interface
 export interface UserData {
   _id: string;
   name: string;
@@ -10,7 +9,6 @@ export interface UserData {
   isLogin: boolean;
 }
 
-// Initial state
 const InitialState: UserData = {
   _id: "",
   name: "",
@@ -20,22 +18,20 @@ const InitialState: UserData = {
   isLogin: false,
 };
 
-// Slice definition
 const userLoginSlice = createSlice({
   name: "userLogin",
   initialState: InitialState,
   reducers: {
-    // Update the entire user data
     updateUserData: (state, action: PayloadAction<UserData>) => {
       const { _id, name, email, password, phone } = action.payload;
-      state._id = _id as string; // Convert string _id to ObjectId if necessary
+      state._id = _id as string;
       state.name = name;
       state.email = email;
       state.password = password;
       state.phone = phone;
-      state.isLogin = true; // Automatically set isLogin to true on successful login
+      state.isLogin = true;
     },
-    // Logout user and reset state
+
     logoutUser: (state) => {
       state._id = "";
       state.name = "";
@@ -47,6 +43,5 @@ const userLoginSlice = createSlice({
   },
 });
 
-// Exporting the actions and the reducer
 export const { updateUserData, logoutUser } = userLoginSlice.actions;
 export default userLoginSlice.reducer;

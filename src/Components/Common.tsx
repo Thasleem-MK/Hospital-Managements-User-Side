@@ -7,6 +7,7 @@ export const FormInput = ({
   type,
   value,
   name,
+  className,
 }: {
   type: string;
   value?: any;
@@ -14,6 +15,7 @@ export const FormInput = ({
   OnChange: any;
   id?: string;
   name?: string;
+  className?: string;
 }) => {
   return (
     <input
@@ -22,7 +24,7 @@ export const FormInput = ({
       value={value}
       name={name}
       onChange={OnChange}
-      className="pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+      className={`pl-10 w-full px-3 py-2 border border-green-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 ${className}`}
       placeholder={placeholder}
       required
     />
@@ -33,7 +35,7 @@ export const BackButton = ({ OnClick }: { OnClick: any }) => {
   return (
     <button
       onClick={OnClick}
-      className="mr-4 p-2 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition-colors"
+      className="mr-4 p-2 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition-colors absolute left-0"
     >
       <ArrowLeft className="h-6 w-6" />
     </button>

@@ -1,6 +1,5 @@
 import Slider from "react-slick";
 import { Hospital, UserRound, Building2, Ambulance } from "lucide-react";
-// Import slick carousel CSS (you'll need to install these packages)
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Navbar from "../Components/Navbar";
