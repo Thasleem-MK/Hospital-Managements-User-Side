@@ -9,111 +9,69 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Hospital, Review } from "../Redux/HospitalsData";
+import { useSelector } from "react-redux";
+import { RootState } from "../Redux/Store";
 
-interface Hospital {
-  id: number;
+interface HospitalDetails {
+  id: string;
   name: string;
   rating: number;
   doctorCount: number;
   location: string;
 }
 
-interface Specialty {
-  id: number;
+interface SpecialtyWithHospitals {
+  id?: string;
   name: string;
   description: string;
-  hospitals: Hospital[];
+  hospitals: HospitalDetails[];
 }
 
-const specialties: Specialty[] = [
-  {
-    id: 1,
-    name: "Cardiology",
-    description: "Deals with disorders of the heart and blood vessels",
-    hospitals: [
-      {
-        id: 101,
-        name: "City Hospital",
-        rating: 4.5,
-        doctorCount: 15,
-        location: "Downtown",
-      },
-      {
-        id: 102,
-        name: "General Hospital",
-        rating: 4.2,
-        doctorCount: 12,
-        location: "Uptown",
-      },
-      {
-        id: 103,
-        name: "Heart Center",
-        rating: 4.8,
-        doctorCount: 20,
-        location: "Midtown",
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Orthopedics",
-    description: "Focuses on the musculoskeletal system",
-    hospitals: [
-      {
-        id: 101,
-        name: "City Hospital",
-        rating: 4.3,
-        doctorCount: 10,
-        location: "Downtown",
-      },
-      {
-        id: 104,
-        name: "Sports Medicine Center",
-        rating: 4.7,
-        doctorCount: 18,
-        location: "West End",
-      },
-      {
-        id: 105,
-        name: "Bone & Joint Clinic",
-        rating: 4.5,
-        doctorCount: 15,
-        location: "East Side",
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Pediatrics",
-    description: "Provides medical care for infants, children, and adolescents",
-    hospitals: [
-      {
-        id: 102,
-        name: "General Hospital",
-        rating: 4.4,
-        doctorCount: 14,
-        location: "Uptown",
-      },
-      {
-        id: 106,
-        name: "Children's Hospital",
-        rating: 4.9,
-        doctorCount: 25,
-        location: "North End",
-      },
-      {
-        id: 107,
-        name: "Family Care Center",
-        rating: 4.6,
-        doctorCount: 12,
-        location: "South Side",
-      },
-    ],
-  },
-];
+// Function to gather specialties with associated hospitals
+const getAllSpecialtiesWithHospitals = (
+  hospitals: Hospital[]
+): SpecialtyWithHospitals[] => {
+  const specialtiesMap: { [key: string]: SpecialtyWithHospitals } = {};
+
+  hospitals.forEach((hospital) => {
+    hospital.specialties.forEach((specialty) => {
+      if (!specialtiesMap[specialty.name]) {
+        specialtiesMap[specialty.name] = {
+          id: specialty._id,
+          name: specialty.name,
+          description: specialty.description,
+          hospitals: [],
+        };
+      }
+
+      specialtiesMap[specialty.name].hospitals.push({
+        id: hospital._id ?? "",
+        name: hospital.name,
+        rating: calculateAverageRating(hospital.reviews),
+        doctorCount: specialty.doctors.length,
+        location: hospital.address,
+      });
+    });
+  });
+
+  return Object.values(specialtiesMap);
+};
+
+const calculateAverageRating = (reviews: Review[]): number => {
+  if (reviews.length === 0) return 0;
+  const totalRating = reviews.reduce((sum, review) => sum + review.rating, 0);
+  return totalRating / reviews.length;
+};
 
 const SpecialtiesPage: React.FC = () => {
-  const [expandedSpecialty, setExpandedSpecialty] = useState<number | null>(
+  const hospitals = useSelector(
+    (state: RootState) => state.hospitalData.hospitals
+  );
+
+  const specialties = getAllSpecialtiesWithHospitals(hospitals);
+
+  const [expandedSpecialty, setExpandedSpecialty] = useState<string | null>(
     null
   );
   const [searchTerm, setSearchTerm] = useState("");
@@ -131,19 +89,19 @@ const SpecialtiesPage: React.FC = () => {
         specialty.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
     setFilteredSpecialties(filtered);
-  }, [searchTerm]);
+  }, [searchTerm, specialties]);
 
-  const toggleSpecialtyExpansion = (specialtyId: number) => {
+  const toggleSpecialtyExpansion = (specialtyId: string) => {
     setExpandedSpecialty(
       expandedSpecialty === specialtyId ? null : specialtyId
     );
   };
 
-  const navigateToHospital = (hospitalId: number) => {
+  const navigateToHospital = (hospitalId: string) => {
     navigate(`/services/hospitals/${hospitalId}`);
   };
 
-  const sortHospitals = (hospitals: Hospital[]) => {
+  const sortHospitals = (hospitals: HospitalDetails[]): HospitalDetails[] => {
     return hospitals.sort((a, b) => {
       if (sortOrder === "asc") {
         return a[sortCriteria] - b[sortCriteria];
@@ -195,13 +153,13 @@ const SpecialtiesPage: React.FC = () => {
             >
               <div
                 className="flex items-center p-4 cursor-pointer"
-                onClick={() => toggleSpecialtyExpansion(specialty.id)}
+                onClick={() => toggleSpecialtyExpansion(specialty.id as string)}
               >
                 <div className="flex-grow">
                   <h2 className="text-xl font-semibold text-green-800">
                     {specialty.name}
                   </h2>
-                  <p className="text-green-600">{specialty.description}</p>
+                  {/* <p className="text-green-600">{specialty.description}</p> */}
                 </div>
                 {expandedSpecialty === specialty.id ? (
                   <ChevronUp className="text-green-600" />

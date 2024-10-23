@@ -4,13 +4,16 @@ interface ConsultingSchedule {
   end_time: string;
 }
 
-interface Doctor {
+export interface Doctor {
+  _id?: string;
   name: string;
   consulting: ConsultingSchedule[];
+  qualification: string;
 }
 
-interface Specialty {
+export interface Specialty {
   name: string;
+  _id?: string;
   description: string;
   department_info: string;
   phone: string;
@@ -87,6 +90,6 @@ const hospitalSlice = createSlice({
   },
 });
 
-export const { setHospitalData,updateHospitalData } = hospitalSlice.actions;
+export const { setHospitalData, updateHospitalData } = hospitalSlice.actions;
 
 export default hospitalSlice.reducer;

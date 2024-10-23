@@ -1,137 +1,80 @@
 import React, { useState, useEffect } from "react";
-import {
-  Search,
-  Clock,
-  MapPin,
-  ChevronDown,
-  ChevronUp,
-} from "lucide-react";
+import { Search, Clock, MapPin, ChevronDown, ChevronUp } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { BackButton } from "../Components/Common";
+import { useSelector } from "react-redux";
+import { RootState } from "../Redux/Store";
+import { Doctor, Hospital, Specialty } from "../Redux/HospitalsData";
+import { convertTo12HourFormat } from "../Components/HospitalDetailesComponents";
 
-interface Doctor {
-  id: number;
-  name: string;
+interface DoctorWithSpecialtyAndHospital extends Doctor {
   specialty: string;
-  image: string;
-  availability: {
-    day: string;
-    times: {
-      start: string;
-      end: string;
-      hospital: string;
-    }[];
-  }[];
+  hospitalName: string;
 }
 
-const doctors: Doctor[] = [
-  {
-    id: 1,
-    name: "Dr. John Smith",
-    specialty: "Cardiology",
-    image: "/placeholder.svg?height=200&width=200",
-    availability: [
-      {
-        day: "Monday",
-        times: [
-          { start: "09:00 AM", end: "11:00 AM", hospital: "City Hospital" },
-          { start: "02:00 PM", end: "05:00 PM", hospital: "General Hospital" },
-        ],
-      },
-      {
-        day: "Wednesday",
-        times: [
-          { start: "10:00 AM", end: "02:00 PM", hospital: "City Hospital" },
-        ],
-      },
-      {
-        day: "Friday",
-        times: [
-          { start: "01:00 PM", end: "06:00 PM", hospital: "General Hospital" },
-        ],
-      },
-    ],
-  },
-  {
-    id: 2,
-    name: "Dr. Emily Johnson",
-    specialty: "Pediatrics",
-    image: "/placeholder.svg?height=200&width=200",
-    availability: [
-      {
-        day: "Tuesday",
-        times: [
-          {
-            start: "08:00 AM",
-            end: "12:00 PM",
-            hospital: "Children's Hospital",
-          },
-          { start: "02:00 PM", end: "04:00 PM", hospital: "City Hospital" },
-        ],
-      },
-      {
-        day: "Thursday",
-        times: [
-          { start: "09:00 AM", end: "03:00 PM", hospital: "General Hospital" },
-        ],
-      },
-    ],
-  },
-  {
-    id: 3,
-    name: "Dr. Michael Lee",
-    specialty: "Orthopedics",
-    image: "/placeholder.svg?height=200&width=200",
-    availability: [
-      {
-        day: "Monday",
-        times: [
-          {
-            start: "10:00 AM",
-            end: "02:00 PM",
-            hospital: "Sports Medicine Center",
-          },
-        ],
-      },
-      {
-        day: "Wednesday",
-        times: [
-          { start: "08:00 AM", end: "12:00 PM", hospital: "City Hospital" },
-          { start: "02:00 PM", end: "06:00 PM", hospital: "General Hospital" },
-        ],
-      },
-      {
-        day: "Friday",
-        times: [
-          { start: "09:00 AM", end: "01:00 PM", hospital: "Orthopedic Clinic" },
-        ],
-      },
-    ],
-  },
-];
+const getAllDoctorsWithSpecialties = (
+  hospitals: Hospital[]
+): DoctorWithSpecialtyAndHospital[] => {
+  return hospitals.flatMap((hospital) =>
+    hospital.specialties.flatMap((specialty: Specialty) =>
+      specialty.doctors.map((doctor: Doctor) => ({
+        ...doctor,
+        specialty: specialty.name,
+        hospitalName: hospital.name,
+      }))
+    )
+  );
+};
 
 const DoctorsPage: React.FC = () => {
+  const hospitals = useSelector(
+    (state: RootState) => state.hospitalData.hospitals
+  );
+
+  const [doctors, setDoctors] = useState<DoctorWithSpecialtyAndHospital[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [filteredDoctors, setFilteredDoctors] = useState(doctors);
-  const [expandedDoctor, setExpandedDoctor] = useState<number | null>(null);
+  const [filteredDoctors, setFilteredDoctors] = useState<
+    DoctorWithSpecialtyAndHospital[] | null
+  >(null);
+  const [expandedDoctor, setExpandedDoctor] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const results = doctors.filter(
-      (doctor) =>
-        doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        doctor.specialty.toLowerCase().includes(searchTerm.toLowerCase())
-    );
-    setFilteredDoctors(results);
-  }, [searchTerm]);
+    if (hospitals.length > 0) {
+      const allDoctors = getAllDoctorsWithSpecialties(hospitals);
+      setDoctors(allDoctors);
+      setFilteredDoctors(allDoctors);
+      setLoading(false);
+    }
+  }, [hospitals]);
 
-  const toggleDoctorExpansion = (doctorId: number) => {
+  useEffect(() => {
+    if (doctors) {
+      const results = doctors.filter(
+        (doctor) =>
+          doctor.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          doctor.specialty.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+      setFilteredDoctors(results);
+    }
+  }, [searchTerm, doctors]);
+
+  const toggleDoctorExpansion = (doctorId: string) => {
     setExpandedDoctor(expandedDoctor === doctorId ? null : doctorId);
   };
 
   const handleGoBack = () => {
     navigate(-1);
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex justify-center items-center">
+        <div className="text-green-700">Loading...</div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
@@ -153,55 +96,47 @@ const DoctorsPage: React.FC = () => {
         </div>
 
         <div className="space-y-6">
-          {filteredDoctors.map((doctor) => (
+          {filteredDoctors?.map((doctor) => (
             <div
-              key={doctor.id}
+              key={doctor._id}
               className="bg-white rounded-lg shadow-md overflow-hidden"
             >
               <div
                 className="flex items-center p-4 cursor-pointer"
-                onClick={() => toggleDoctorExpansion(doctor.id)}
+                onClick={() => toggleDoctorExpansion(doctor._id as string)}
               >
-                <img
-                  src={doctor.image}
-                  alt={doctor.name}
-                  className="w-16 h-16 rounded-full object-cover mr-4"
-                />
                 <div className="flex-grow">
                   <h2 className="text-xl font-semibold text-green-800">
                     {doctor.name}
                   </h2>
                   <p className="text-green-600">{doctor.specialty}</p>
                 </div>
-                {expandedDoctor === doctor.id ? (
+                {expandedDoctor === doctor._id ? (
                   <ChevronUp className="text-green-600" />
                 ) : (
                   <ChevronDown className="text-green-600" />
                 )}
               </div>
-              {expandedDoctor === doctor.id && (
+              {expandedDoctor === doctor._id && (
                 <div className="px-4 pb-4">
                   <h3 className="text-lg font-semibold text-green-700 mb-2">
                     Availability
                   </h3>
-                  {doctor.availability.map((schedule, index) => (
+                  {doctor.consulting.map((schedule, index) => (
                     <div key={index} className="mb-2">
                       <h4 className="font-medium text-green-600">
                         {schedule.day}
                       </h4>
-                      {schedule.times.map((time, timeIndex) => (
-                        <div
-                          key={timeIndex}
-                          className="ml-4 flex items-center text-green-700"
-                        >
-                          <Clock className="h-4 w-4 mr-1" />
-                          <span>
-                            {time.start} - {time.end}
-                          </span>
-                          <MapPin className="h-4 w-4 ml-2 mr-1" />
-                          <span>{time.hospital}</span>
-                        </div>
-                      ))}
+
+                      <div className="ml-4 flex items-center text-green-700">
+                        <Clock className="h-4 w-4 mr-1" />
+                        <span>
+                          {convertTo12HourFormat(schedule.start_time)} -{" "}
+                          {convertTo12HourFormat(schedule.end_time)}
+                        </span>
+                        <MapPin className="h-4 w-4 ml-2 mr-1" />
+                        <span>{doctor.hospitalName}</span>
+                      </div>
                     </div>
                   ))}
                 </div>
@@ -210,7 +145,7 @@ const DoctorsPage: React.FC = () => {
           ))}
         </div>
 
-        {filteredDoctors.length === 0 && (
+        {filteredDoctors?.length === 0 && (
           <div className="text-center text-green-700 mt-8">
             No doctors found matching your search criteria.
           </div>

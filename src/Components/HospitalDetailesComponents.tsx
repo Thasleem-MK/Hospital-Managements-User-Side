@@ -39,8 +39,9 @@ export const Button = ({
 // Information window
 export const Info = ({ hospital }: { hospital: Hospital }) => {
   const ratingPersentage =
-    hospital?.reviews.reduce((sum, review) => sum + review.rating, 0) /
-    (hospital?.reviews.length*5)*100;
+    (hospital?.reviews.reduce((sum, review) => sum + review.rating, 0) /
+      (hospital?.reviews.length * 5)) *
+    100;
   return (
     <div className="space-y-4">
       <div className="flex items-center">
@@ -58,9 +59,8 @@ export const Info = ({ hospital }: { hospital: Hospital }) => {
       <div className="flex items-center">
         <Star className="h-5 w-5 text-green-600 mr-2" />
         <span>
-          {/* {averageRating.toFixed(1)} based on {hospital?.reviews.length} reviews */}
-          {(ratingPersentage/100)*5} out of 5 stars (based on {hospital?.reviews.length}{" "}
-          reviews)
+          {(ratingPersentage / 100) * 5} out of 5 stars (based on{" "}
+          {hospital?.reviews.length} reviews)
         </span>
       </div>
       <div className="mt-6">
@@ -81,11 +81,11 @@ export const Specialties = ({ hospital }: { hospital: Hospital }) => {
           key={index}
           className="border border-green-200 rounded-md p-4 hover:bg-green-50 transition-colors"
           onClick={() => {
-            navigate(`/services/hospitals/${hospital?._id}/${dept.name}`);
+            navigate(`/services/hospitals/${hospital?._id}/${dept._id}`);
           }}
         >
           <h3 className="text-lg font-medium text-green-700">{dept.name}</h3>
-          <p className="text-green-600">{dept.description}</p>
+          <p className="text-green-600">{dept.department_info}</p>
         </div>
       ))}
     </div>
