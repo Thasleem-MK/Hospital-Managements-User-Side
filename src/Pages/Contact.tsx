@@ -1,6 +1,4 @@
-import Navbar from "../Components/Navbar"
-
-"use client";
+import Navbar from "../Components/Navbar";
 
 import { useState } from "react";
 import {

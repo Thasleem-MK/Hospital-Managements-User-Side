@@ -159,7 +159,6 @@ const SpecialtiesPage: React.FC = () => {
                   <h2 className="text-xl font-semibold text-green-800">
                     {specialty.name}
                   </h2>
-                  {/* <p className="text-green-600">{specialty.description}</p> */}
                 </div>
                 {expandedSpecialty === specialty.id ? (
                   <ChevronUp className="text-green-600" />
