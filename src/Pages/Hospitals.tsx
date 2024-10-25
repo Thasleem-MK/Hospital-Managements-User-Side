@@ -280,7 +280,7 @@ export default function HospitalsPage() {
             >
               <img
                 src={
-                  hospital.image.imageUrl ||
+                  hospital?.image?.imageUrl ||
                   "/placeholder.svg?height=200&width=300"
                 }
                 alt={hospital.name}
