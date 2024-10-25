@@ -28,7 +28,7 @@ const HospitalDetails: React.FC = () => {
       <div className="max-w-4xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
         <div className="relative h-64 md:h-96">
           <img
-            src={hospital?.image.imageUrl}
+            src={hospital?.image?.imageUrl || ""}
             alt={hospital?.name}
             className="w-full h-full object-cover"
           />
