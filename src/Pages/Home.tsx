@@ -142,7 +142,7 @@ export default function HomePage() {
         <h2 className="text-2xl font-bold text-green-800 mb-4">Our Services</h2>
 
         <div className="grid grid-cols-2 gap-4">
-          {features.slice(0, 3).map((feature) => (
+          {features.map((feature) => (
             <Link key={feature.name} to={feature.href}>
               <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center justify-center h-32">
                 <feature.icon className="h-8 w-8 text-green-600 mb-2" />
@@ -154,7 +154,7 @@ export default function HomePage() {
           ))}
         </div>
 
-        <div className="grid grid-cols-2 gap-4 mt-4">
+        {/* <div className="grid grid-cols-2 gap-4 mt-4">
           {features.slice(3).map((feature) => (
             <Link key={feature.name} to={feature.href}>
               <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center justify-center h-32">
@@ -165,7 +165,7 @@ export default function HomePage() {
               </div>
             </Link>
           ))}
-        </div>
+        </div> */}
       </main>
     </div>
   );
