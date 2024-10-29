@@ -13,9 +13,10 @@ const features = [
 ];
 
 const adImages = [
-  "https://img.freepik.com/free-photo/wide-angle-shot-single-tree-growing-clouded-sky-during-sunset-surrounded-by-grass_181624-22807.jpg",
-  "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRepCoPVhIXI3rEUss3pxeNaHcqwHHgVHZTeQ&s",
-  "https://thumbs.dreamstime.com/b/environment-earth-day-hands-trees-growing-seedlings-bokeh-green-background-female-hand-holding-tree-nature-field-gra-130247647.jpg",
+  "https://img.freepik.com/free-vector/flat-design-medical-facebook-ad_23-2149091913.jpg",
+  "https://img.freepik.com/free-vector/flat-design-medical-facebook-ad_23-2149091912.jpg",
+  "https://th.bing.com/th/id/OIP.yTcG-jZWUKXEzm18Jcr2yAHaEK?w=800&h=450&rs=1&pid=ImgDetMain",
+  "https://dcassetcdn.com/design_img/3242090/43775/43775_17860005_3242090_1b999885_image.jpg",
 ];
 
 export default function HomePage() {
