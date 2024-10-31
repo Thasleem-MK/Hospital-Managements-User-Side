@@ -49,6 +49,7 @@ interface Booking {
 export interface Hospital {
   _id?: string;
   name: string;
+  type: string;
   address: string;
   password: string;
   phone: string;
