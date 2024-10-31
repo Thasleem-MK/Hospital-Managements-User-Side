@@ -88,7 +88,7 @@ import Navbar from "../Components/Navbar";
 import { Link } from "react-router-dom";
 
 const features = [
-  { name: "Hospitals", icon: Hospital, href: "/services/hospitals" },
+  { name: "Hospitals", icon: Hospital, href: "/services/hospitals/types" },
   { name: "Doctors", icon: UserRound, href: "/services/doctors" },
   { name: "Specialties", icon: Building2, href: "/services/specialties" },
   { name: "Ambulance", icon: Ambulance, href: "/services/ambulance" },

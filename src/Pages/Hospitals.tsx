@@ -6,7 +6,7 @@ import {
   setHospitalData,
   WorkingHours,
 } from "../Redux/HospitalsData";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Search, Clock, Star, Phone } from "lucide-react";
 import Navbar from "../Components/Navbar";
 import { RootState } from "../Redux/Store";
@@ -22,6 +22,7 @@ export default function HospitalsPage() {
     (state: RootState) => state.hospitalData
   );
   const dispatch = useDispatch();
+  const query = useParams();
 
   useEffect(() => {
     const getHospitalData = async () => {
@@ -117,6 +118,8 @@ export default function HospitalsPage() {
       }
       return 0;
     });
+
+  console.log(query);
 
   return (
     <div className="min-h-screen bg-green-50">

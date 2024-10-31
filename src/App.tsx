@@ -15,6 +15,7 @@ import { useEffect } from "react";
 import { apiClient } from "./Components/Axios";
 import { useDispatch } from "react-redux";
 import { setHospitalData } from "./Redux/HospitalsData";
+import HospitalTypeCards from "./Pages/HospitalTypes";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,7 @@ function App() {
         <Route path="/login" element={<UserLogin />} />
         <Route path="/password" element={<PasswordReset />} />
         <Route path="/services">
+          <Route path="hospitals/types" element={<HospitalTypeCards />} />
           <Route path="hospitals" element={<HospitalsPage />} />
           <Route path="hospitals/:id" element={<HospitalDetails />} />
           <Route
