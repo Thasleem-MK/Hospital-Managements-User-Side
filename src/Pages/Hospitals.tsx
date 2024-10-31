@@ -12,18 +12,18 @@ import Navbar from "../Components/Navbar";
 import { RootState } from "../Redux/Store";
 import { BackButton, FormInput } from "../Components/Common";
 
-export default function HospitalsPage() {
+const HospitalsPage = () => {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const HospitasType = queryParams.get("type") as string;
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOpenNow, setFilterOpenNow] = useState(false);
-  // const [sortBy, setSortBy] = useState("distance");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { hospitals = [] } = useSelector(
     (state: RootState) => state.hospitalData
   );
+const {latitude,longitude}=useSelector((state:RootState)=>state.userLogin)
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -45,8 +45,18 @@ export default function HospitalsPage() {
     lon1: number,
     lat2: number,
     lon2: number
-  ) => {
-    return Math.sqrt(Math.pow(lat2 - lat1, 2) + Math.pow(lon2 - lon1, 2));
+  ): number => {
+    const R = 6371; // Radius of Earth in kilometers
+    const dLat = ((lat2 - lat1) * Math.PI) / 180;
+    const dLon = ((lon2 - lon1) * Math.PI) / 180;
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos((lat1 * Math.PI) / 180) *
+        Math.cos((lat2 * Math.PI) / 180) *
+        Math.sin(dLon / 2) *
+        Math.sin(dLon / 2);
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in kilometers
   };
 
   const isOpenNow = (workingHours: WorkingHours[]) => {
@@ -90,14 +100,14 @@ export default function HospitalsPage() {
     )
     .sort((a: Hospital, b: Hospital) => {
       const distanceA = calculateDistance(
-        0,
-        0,
+        latitude as number,
+        longitude as number,
         a.latitude as number,
         a.longitude as number
       );
       const distanceB = calculateDistance(
-        0,
-        0,
+        latitude as number,
+        longitude as number,
         b.latitude as number,
         b.longitude as number
       );
@@ -207,4 +217,5 @@ export default function HospitalsPage() {
       </main>
     </div>
   );
-}
+};
+export default HospitalsPage;
