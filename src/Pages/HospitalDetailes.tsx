@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import "leaflet/dist/leaflet.css";
-import { ArrowLeft } from "lucide-react";
 import Map from "../Components/Map";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -13,6 +12,7 @@ import {
 import { RootState } from "../Redux/Store";
 import { Hospital } from "../Redux/HospitalsData";
 import { useSelector } from "react-redux";
+import { ArrowLeft } from "lucide-react";
 
 const HospitalDetails: React.FC = () => {
   const { id } = useParams();
@@ -37,11 +37,14 @@ const HospitalDetails: React.FC = () => {
             {hospital?.name}
           </h1>
           <button
-            onClick={() => navigate("/services/hospitals")}
+            onClick={() =>
+              navigate(`/services/hospitals?type=${hospital?.type}`)
+            }
             className="absolute top-4 left-4 bg-white bg-opacity-75 p-2 rounded-full hover:bg-opacity-100 transition-all duration-200"
           >
             <ArrowLeft className="h-6 w-6 text-green-600" />
           </button>
+          
         </div>
 
         <div className="p-6">

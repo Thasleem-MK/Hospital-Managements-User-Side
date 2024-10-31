@@ -59,7 +59,7 @@ export const Info = ({ hospital }: { hospital: Hospital }) => {
       <div className="flex items-center">
         <Star className="h-5 w-5 text-green-600 mr-2" />
         <span>
-          {(ratingPersentage / 100) * 5} out of 5 stars (based on{" "}
+          {!ratingPersentage?0:(ratingPersentage / 100) * 5} out of 5 stars (based on{" "}
           {hospital?.reviews.length} reviews)
         </span>
       </div>

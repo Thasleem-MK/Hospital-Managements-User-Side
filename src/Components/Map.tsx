@@ -132,7 +132,7 @@ const Map = ({ hospital }: { hospital: Hospital }) => {
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           <Marker position={hospitalLocation} icon={hospitalIcon}>
-            <Popup>City General Hospital</Popup>
+            <Popup>{hospital.name}</Popup>
           </Marker>
           {userLocation && (
             <Marker position={userLocation} icon={userIcon}>

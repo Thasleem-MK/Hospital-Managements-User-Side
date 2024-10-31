@@ -18,7 +18,7 @@ export default function HospitalsPage() {
   const HospitasType = queryParams.get("type") as string;
   const [searchTerm, setSearchTerm] = useState("");
   const [filterOpenNow, setFilterOpenNow] = useState(false);
-  const [sortBy, setSortBy] = useState("distance");
+  // const [sortBy, setSortBy] = useState("distance");
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { hospitals = [] } = useSelector(
@@ -89,37 +89,19 @@ export default function HospitalsPage() {
         (!filterOpenNow || isOpenNow(hospital.working_hours))
     )
     .sort((a: Hospital, b: Hospital) => {
-      if (sortBy === "distance") {
-        const distanceA = calculateDistance(
-          0,
-          0,
-          a.latitude as number,
-          a.longitude as number
-        );
-        const distanceB = calculateDistance(
-          0,
-          0,
-          b.latitude as number,
-          b.longitude as number
-        );
-        return distanceA - distanceB;
-      }
-      if (sortBy === "rating") {
-        const ratingA = a.reviews.length
-          ? a.reviews.reduce(
-              (sum: any, review: any) => sum + review.rating,
-              0
-            ) / a.reviews.length
-          : 0;
-        const ratingB = b.reviews.length
-          ? b.reviews.reduce(
-              (sum: any, review: any) => sum + review.rating,
-              0
-            ) / b.reviews.length
-          : 0;
-        return ratingB - ratingA;
-      }
-      return 0;
+      const distanceA = calculateDistance(
+        0,
+        0,
+        a.latitude as number,
+        a.longitude as number
+      );
+      const distanceB = calculateDistance(
+        0,
+        0,
+        b.latitude as number,
+        b.longitude as number
+      );
+      return distanceA - distanceB;
     });
 
   return (
@@ -157,7 +139,7 @@ export default function HospitalsPage() {
               Open Now
             </label>
           </div>
-          <div>
+          {/* <div>
             <select
               className="p-2 rounded-md border border-green-300 focus:outline-none focus:ring-2 focus:ring-green-500"
               value={sortBy}
@@ -166,7 +148,7 @@ export default function HospitalsPage() {
               <option value="distance">Sort by Distance</option>
               <option value="rating">Sort by Rating</option>
             </select>
-          </div>
+          </div> */}
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
