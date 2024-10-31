@@ -16,21 +16,25 @@ import { apiClient } from "./Components/Axios";
 import { useDispatch } from "react-redux";
 import { setHospitalData } from "./Redux/HospitalsData";
 import HospitalTypeCards from "./Pages/HospitalTypes";
+import { getCurrentLocation } from "./Components/getCurrentLocation";
+import { updateUserData } from "./Redux/userData";
 
 function App() {
   const dispatch = useDispatch();
-    useEffect(() => {
-      const getHospitalData = async () => {
-        try {
-          const result = await apiClient.get("/api/hospitals");
-          dispatch(setHospitalData({ data: result.data.data }));
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      getHospitalData();
-    }, []);
-  
+  useEffect(() => {
+    const getHospitalData = async () => {
+      try {
+        const result = await apiClient.get("/api/hospitals");
+        dispatch(setHospitalData({ data: result.data.data }));
+        const [lat, lon] = await getCurrentLocation();
+        dispatch(updateUserData({latitude:lat as number,longitude:lon as number}))
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    getHospitalData();
+  }, []);
+
   return (
     <>
       <Routes>

@@ -6,6 +6,7 @@ import "leaflet-routing-machine";
 import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
 import { MapPin } from "lucide-react";
 import { Hospital } from "../Redux/HospitalsData";
+import { getCurrentLocation } from "./getCurrentLocation";
 
 Leaflet.Icon.Default.mergeOptions({
   iconRetinaUrl: import.meta.env.VITE_markerIcon2x,
@@ -96,14 +97,19 @@ const Map = ({ hospital }: { hospital: Hospital }) => {
   ];
 
   useEffect(() => {
-    navigator.geolocation.getCurrentPosition(
-      (position) => {
-        setUserLocation([position.coords.latitude, position.coords.longitude]);
-      },
-      (error) => {
-        console.error("Error getting user location:", error);
-      }
-    );
+    // navigator.geolocation.getCurrentPosition(
+    //   (position) => {
+    //     setUserLocation([position.coords.latitude, position.coords.longitude]);
+    //   },
+    //   (error) => {
+    //     console.error("Error getting user location:", error);
+    //   }
+    // );
+    const getLocation = async () => {
+      const [lat, lon] = await getCurrentLocation();
+      setUserLocation([lat,lon]);
+    }
+    getLocation();
   }, []);
 
   const openGoogleMaps = () => {
