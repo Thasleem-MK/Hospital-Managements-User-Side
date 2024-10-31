@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Search, Clock, Star, Phone } from "lucide-react";
 import Navbar from "../Components/Navbar";
 import { RootState } from "../Redux/Store";
-import { FormInput } from "../Components/Common";
+import { BackButton, FormInput } from "../Components/Common";
 
 export default function HospitalsPage() {
   const location = useLocation();
@@ -126,7 +126,11 @@ export default function HospitalsPage() {
     <div className="min-h-screen bg-green-50">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-green-800 mb-6">Hospitals</h1>
+        {/* <h1 className="text-3xl font-bold text-green-800 mb-6">Hospitals</h1> */}
+        <div className="relative mb-6 flex items-center justify-center">
+          <BackButton OnClick={() => navigate("/services/hospitals/types")} />
+          <h1 className="text-3xl font-bold text-green-800">Hospitals</h1>
+        </div>
 
         <div className="mb-6 flex flex-wrap gap-4">
           <div className="flex-grow">
