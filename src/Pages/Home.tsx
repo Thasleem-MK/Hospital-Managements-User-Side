@@ -4,8 +4,6 @@ import {
   UserRound,
   Building2,
   Ambulance,
-  Droplet,
-  Search,
 } from "lucide-react";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -17,8 +15,8 @@ const features = [
   { name: "Doctors", icon: UserRound, href: "/services/doctors" },
   { name: "Specialties", icon: Building2, href: "/services/specialties" },
   { name: "Ambulance", icon: Ambulance, href: "/services/ambulance" },
-  { name: "Donate Blood", icon: Droplet, href: "/services/blood-donation" },
-  { name: "Find Blood", icon: Search, href: "/services/blood-request" },
+//   { name: "Donate Blood", icon: Droplet, href: "/services/blood-donation" },
+//   { name: "Find Blood", icon: Search, href: "/services/blood-request" },
 ];
 
 const adImages = [
@@ -76,19 +74,6 @@ export default function HomePage() {
             </Link>
           ))}
         </div>
-
-        {/* <div className="grid grid-cols-2 gap-4 mt-4">
-          {features.slice(3).map((feature) => (
-            <Link key={feature.name} to={feature.href}>
-              <div className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center justify-center h-32">
-                <feature.icon className="h-8 w-8 text-green-600 mb-2" />
-                <h3 className="text-sm font-semibold text-green-800 text-center">
-                  {feature.name}
-                </h3>
-              </div>
-            </Link>
-          ))}
-        </div> */}
       </main>
     </div>
   );
