@@ -18,21 +18,26 @@ import { setHospitalData } from "./Redux/HospitalsData";
 import HospitalTypeCards from "./Pages/HospitalTypes";
 import { getCurrentLocation } from "./Components/getCurrentLocation";
 import { updateUserData } from "./Redux/userData";
+import { setAmbulances } from "./Redux/AmbulanceData";
 
 function App() {
   const dispatch = useDispatch();
   useEffect(() => {
-    const getHospitalData = async () => {
+    const getData = async () => {
       try {
         const result = await apiClient.get("/api/hospitals");
         dispatch(setHospitalData({ data: result.data.data }));
         const [lat, lon] = await getCurrentLocation();
-        dispatch(updateUserData({latitude:lat as number,longitude:lon as number}))
+        dispatch(
+          updateUserData({ latitude: lat as number, longitude: lon as number })
+        );
+        const ambulances = await apiClient.get("/api/ambulances");
+        dispatch(setAmbulances(ambulances.data.data));
       } catch (err) {
         console.error(err);
       }
     };
-    getHospitalData();
+    getData();
   }, []);
 
   return (
