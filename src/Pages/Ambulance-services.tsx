@@ -8,68 +8,15 @@ import {
   ArrowLeft,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-
-interface AmbulanceService {
-  id: number;
-  name: string;
-  contactNumber: string;
-  latitude: number;
-  longitude: number;
-  location: string;
-}
-
-const ambulanceServices: AmbulanceService[] = [
-  {
-    id: 1,
-    name: "City Emergency Response",
-    contactNumber: "555-0101",
-    latitude: 40.7128,
-    longitude: -74.006,
-    location: "Downtown",
-  },
-  {
-    id: 2,
-    name: "Rapid Rescue Ambulance",
-    contactNumber: "555-0102",
-    latitude: 40.7282,
-    longitude: -73.7949,
-    location: "Uptown",
-  },
-  {
-    id: 3,
-    name: "QuickMed Services",
-    contactNumber: "555-0103",
-    latitude: 40.7589,
-    longitude: -73.9851,
-    location: "Midtown",
-  },
-  {
-    id: 4,
-    name: "LifeLine Ambulance",
-    contactNumber: "555-0104",
-    latitude: 40.7831,
-    longitude: -73.9712,
-    location: "West End",
-  },
-  {
-    id: 5,
-    name: "Swift Aid Paramedics",
-    contactNumber: "555-0105",
-    latitude: 40.7214,
-    longitude: -73.9448,
-    location: "East Side",
-  },
-  {
-    id: 6,
-    name: "Metro Medical Transport",
-    contactNumber: "555-0106",
-    latitude: 40.8224,
-    longitude: -73.9496,
-    location: "North End",
-  },
-];
+import { useSelector } from "react-redux";
+import { RootState } from "../Redux/Store";
+import { AmbulanceService } from "../Redux/AmbulanceData";
 
 const AmbulanceServicesPage: React.FC = () => {
+  const ambulanceServices = useSelector(
+    (state: RootState) => state.ambulanceData
+  );
+
   const [searchTerm, setSearchTerm] = useState("");
   const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
   const [filteredServices, setFilteredServices] = useState(ambulanceServices);
@@ -96,12 +43,14 @@ const AmbulanceServicesPage: React.FC = () => {
   useEffect(() => {
     const filtered = ambulanceServices.filter(
       (service) =>
-        service.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        service.location.toLowerCase().includes(searchTerm.toLowerCase())
+        service.serviceName.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        service.address.toLowerCase().includes(searchTerm.toLowerCase())
     );
     const sortedAndFiltered = sortServices(filtered);
+    console.log(sortedAndFiltered, "Sorted and filterd");
+
     setFilteredServices(sortedAndFiltered);
-  }, [searchTerm, sortOrder, userLocation]);
+  }, [searchTerm, sortOrder, userLocation, ambulanceServices]);
 
   const calculateDistance = (
     lat1: number,
@@ -128,14 +77,14 @@ const AmbulanceServicesPage: React.FC = () => {
       const distanceA = calculateDistance(
         userLocation.latitude,
         userLocation.longitude,
-        a.latitude,
-        a.longitude
+        Number(a.latitude),
+        Number(a.longitude)
       );
       const distanceB = calculateDistance(
         userLocation.latitude,
         userLocation.longitude,
-        b.latitude,
-        b.longitude
+        Number(b.latitude),
+        Number(b.longitude)
       );
       return sortOrder === "asc"
         ? distanceA - distanceB
@@ -193,32 +142,32 @@ const AmbulanceServicesPage: React.FC = () => {
               ? calculateDistance(
                   userLocation.latitude,
                   userLocation.longitude,
-                  service.latitude,
-                  service.longitude
+                  Number(service.latitude),
+                  Number(service.longitude)
                 )
               : null;
 
             return (
               <div
-                key={service.id}
+                key={service._id}
                 className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
               >
                 <div className="flex items-start">
                   <Ambulance className="h-6 w-6 text-green-600 mr-2 mt-1" />
                   <div>
                     <h2 className="text-lg font-semibold text-green-800">
-                      {service.name}
+                      {service.serviceName}
                     </h2>
                     <p className="text-green-600 text-sm mb-2">
-                      {service.location}
+                      {service.address}
                     </p>
                     <div className="flex items-center text-sm text-green-700 mb-1">
                       <Phone className="h-4 w-4 mr-1" />
                       <a
-                        href={`tel:${service.contactNumber}`}
+                        href={`tel:${service.phone}`}
                         className="hover:underline"
                       >
-                        {service.contactNumber}
+                        {service.phone}
                       </a>
                     </div>
                     <div className="flex items-center text-sm text-green-700">
