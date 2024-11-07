@@ -11,6 +11,7 @@ import { Search, Clock, Star, Phone } from "lucide-react";
 import Navbar from "../Components/Navbar";
 import { RootState } from "../Redux/Store";
 import { BackButton, FormInput } from "../Components/Common";
+import LoadingSpinner from "../Components/LoadingSpinner";
 
 const HospitalsPage = () => {
   const location = useLocation();
@@ -88,7 +89,7 @@ const {latitude,longitude}=useSelector((state:RootState)=>state.userLogin)
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <LoadingSpinner/>;
   }
 
   const filteredAndSortedHospitals = hospitals
