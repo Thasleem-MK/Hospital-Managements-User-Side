@@ -1,13 +1,11 @@
-import Navbar from "../Components/Navbar"
+import Navbar from "../Components/Navbar";
 import {
-  Clock,
-  MapPin,
-  Phone,
-  Mail,
-  Award,
-  Users,
-  Stethoscope,
   Ambulance,
+  Search,
+  Calendar,
+  Clipboard,
+  UserPlus,
+  Clock4,
 } from "lucide-react";
 
 export default function AboutPage() {
@@ -17,90 +15,113 @@ export default function AboutPage() {
 
       <main className="container mx-auto px-4 py-8">
         <h1 className="text-4xl font-bold text-green-800 mb-6">
-          About Our Hospital
+          About Our Hospital Finder
         </h1>
 
         <section className="mb-12">
           <p className="text-green-700 text-lg mb-4">
-            Welcome to our state-of-the-art hospital, where we combine
-            cutting-edge medical technology with compassionate care. Our mission
-            is to provide the highest quality healthcare services to our
-            community and beyond.
+            Welcome to our innovative hospital finder platform, where we connect
+            patients with nearby hospitals and doctors. Our mission is to
+            simplify healthcare access and improve the overall patient
+            experience.
           </p>
           <p className="text-green-700 text-lg mb-4">
-            With a team of dedicated professionals and a patient-first approach,
-            we strive to make a positive impact on the lives of those we serve.
-            Our hospital is committed to excellence in medical care, research,
-            and education.
+            With our user-friendly interface, you can easily find hospitals,
+            book appointments, and even access emergency ambulance services. For
+            healthcare providers, we offer a seamless registration process to
+            showcase your facilities and specialties.
           </p>
         </section>
 
         <section className="mb-12">
           <h2 className="text-2xl font-semibold text-green-800 mb-4">
-            Key Information
+            Key Features
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className="flex items-center text-green-700">
-              <Clock className="h-6 w-6 mr-2" />
-              <span>Open 24/7 for emergencies</span>
-            </div>
-            <div className="flex items-center text-green-700">
-              <MapPin className="h-6 w-6 mr-2" />
-              <span>123 Hospital Street, Healthville, HV 12345</span>
-            </div>
-            <div className="flex items-center text-green-700">
-              <Phone className="h-6 w-6 mr-2" />
-              <span>Emergency: 911 | General: (123) 456-7890</span>
-            </div>
-            <div className="flex items-center text-green-700">
-              <Mail className="h-6 w-6 mr-2" />
-              <span>info@ourhospital.com</span>
-            </div>
-          </div>
-        </section>
-
-        <section className="mb-12">
-          <h2 className="text-2xl font-semibold text-green-800 mb-4">
-            Our Achievements
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <Award className="h-12 w-12 text-green-600 mb-4 mx-auto" />
+              <Search className="h-12 w-12 text-green-600 mb-4 mx-auto" />
               <h3 className="text-lg font-semibold text-green-800 text-center mb-2">
-                Top-Rated Hospital
+                Find Nearby Hospitals
               </h3>
               <p className="text-green-700 text-center">
-                Recognized for excellence in patient care
+                Easily locate hospitals and clinics in your area
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
-              <Users className="h-12 w-12 text-green-600 mb-4 mx-auto" />
+              <Calendar className="h-12 w-12 text-green-600 mb-4 mx-auto" />
               <h3 className="text-lg font-semibold text-green-800 text-center mb-2">
-                500,000+ Patients Served
+                Book Appointments
               </h3>
               <p className="text-green-700 text-center">
-                Trusted by our community for over 50 years
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <Stethoscope className="h-12 w-12 text-green-600 mb-4 mx-auto" />
-              <h3 className="text-lg font-semibold text-green-800 text-center mb-2">
-                Cutting-Edge Technology
-              </h3>
-              <p className="text-green-700 text-center">
-                Equipped with the latest medical advancements
+                Schedule consultations with doctors at your convenience
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md">
               <Ambulance className="h-12 w-12 text-green-600 mb-4 mx-auto" />
               <h3 className="text-lg font-semibold text-green-800 text-center mb-2">
-                Rapid Emergency Response
+                Emergency Services
               </h3>
               <p className="text-green-700 text-center">
-                Average response time under 10 minutes
+                Quick access to nearby ambulance services
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <UserPlus className="h-12 w-12 text-green-600 mb-4 mx-auto" />
+              <h3 className="text-lg font-semibold text-green-800 text-center mb-2">
+                Hospital Registration
+              </h3>
+              <p className="text-green-700 text-center">
+                Easy sign-up process for healthcare providers
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <Clipboard className="h-12 w-12 text-green-600 mb-4 mx-auto" />
+              <h3 className="text-lg font-semibold text-green-800 text-center mb-2">
+                Specialties & Doctors
+              </h3>
+              <p className="text-green-700 text-center">
+                Browse hospitals by specialties and find the right doctor
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <Clock4 className="h-12 w-12 text-green-600 mb-4 mx-auto" />
+              <h3 className="text-lg font-semibold text-green-800 text-center mb-2">
+                Working Hours
+              </h3>
+              <p className="text-green-700 text-center">
+                View hospital and doctor availability in real-time
               </p>
             </div>
           </div>
+        </section>
+
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-green-800 mb-4">
+            Find Hospitals Near You
+          </h2>
+          <p className="text-green-700 text-lg">
+            Use our search feature to find hospitals and doctors in your area.
+            Simply enter your location to get started.
+          </p>
+        </section>
+
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-green-800 mb-4">
+            For Hospitals
+          </h2>
+          <p className="text-green-700 text-lg mb-4">
+            Are you a healthcare provider? Join our platform to:
+          </p>
+          <ul className="list-disc list-inside text-green-700 text-lg mb-4">
+            <li>Showcase your facilities and specialties</li>
+            <li>Manage appointments and patient bookings</li>
+            <li>List your doctors and their availability</li>
+            <li>Provide real-time updates on working hours</li>
+          </ul>
+          <p className="text-green-700 text-lg">
+            Contact us to learn more about registering your hospital on our
+            platform.
+          </p>
         </section>
 
         <section>
@@ -108,15 +129,18 @@ export default function AboutPage() {
             Our Commitment
           </h2>
           <p className="text-green-700 text-lg mb-4">
-            At our hospital, we are committed to:
+            At our Hospital Finder platform, we are committed to:
           </p>
           <ul className="list-disc list-inside text-green-700 text-lg">
-            <li>Providing patient-centered care with empathy and respect</li>
-            <li>Continuously improving our services and medical practices</li>
-            <li>Investing in our staff's professional development</li>
-            <li>Engaging with and supporting our local community</li>
+            <li>Simplifying access to quality healthcare services</li>
+            <li>Providing accurate and up-to-date information</li>
             <li>
-              Maintaining the highest standards of medical ethics and integrity
+              Ensuring a seamless experience for patients and healthcare
+              providers
+            </li>
+            <li>Continuously improving our platform based on user feedback</li>
+            <li>
+              Maintaining the highest standards of data privacy and security
             </li>
           </ul>
         </section>
