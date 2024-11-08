@@ -47,8 +47,6 @@ const AmbulanceServicesPage: React.FC = () => {
         service.address.toLowerCase().includes(searchTerm.toLowerCase())
     );
     const sortedAndFiltered = sortServices(filtered);
-    console.log(sortedAndFiltered, "Sorted and filterd");
-
     setFilteredServices(sortedAndFiltered);
   }, [searchTerm, sortOrder, userLocation, ambulanceServices]);
 
@@ -148,33 +146,33 @@ const AmbulanceServicesPage: React.FC = () => {
               : null;
 
             return (
-              <div
-                key={service._id}
-                className="bg-white p-4 rounded-lg shadow-md hover:shadow-lg transition-shadow"
-              >
-                <div className="flex items-start">
-                  <Ambulance className="h-6 w-6 text-green-600 mr-2 mt-1" />
-                  <div>
-                    <h2 className="text-lg font-semibold text-green-800">
+              <div className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 border border-green-100">
+                <div className="flex items-start space-x-4">
+                  <div className="bg-green-100 p-3 rounded-full">
+                    <Ambulance className="h-6 w-6 text-green-600" />
+                  </div>
+                  <div className="flex-1">
+                    <h2 className="text-xl font-semibold text-green-800 mb-2">
                       {service.serviceName}
                     </h2>
-                    <p className="text-green-600 text-sm mb-2">
+                    <p className="text-green-600 text-sm mb-3 flex items-center">
+                      <MapPin className="h-4 w-4 mr-2 flex-shrink-0" />
                       {service.address}
                     </p>
-                    <div className="flex items-center text-sm text-green-700 mb-1">
-                      <Phone className="h-4 w-4 mr-1" />
+                    <div className="flex flex-col sm:flex-row sm:items-center justify-between">
                       <a
                         href={`tel:${service.phone}`}
-                        className="hover:underline"
+                        className="inline-flex items-center px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors duration-300 mb-2 sm:mb-0"
                       >
-                        {service.phone}
+                        <Phone className="h-4 w-4 mr-2" />
+                        <span>Call Now</span>
                       </a>
-                    </div>
-                    <div className="flex items-center text-sm text-green-700">
-                      <MapPin className="h-4 w-4 mr-1" />
-                      {distance !== null
-                        ? `${distance.toFixed(2)} km away`
-                        : "Calculating distance..."}
+                      <div className="flex items-center text-sm text-green-700 bg-green-50 px-3 py-1 rounded-full">
+                        <MapPin className="h-4 w-4 mr-2" />
+                        {distance !== null
+                          ? `${distance.toFixed(2)} km away`
+                          : "Calculating distance..."}
+                      </div>
                     </div>
                   </div>
                 </div>
