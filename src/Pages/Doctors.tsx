@@ -10,6 +10,7 @@ import { convertTo12HourFormat } from "../Components/HospitalDetailesComponents"
 interface DoctorWithSpecialtyAndHospital extends Doctor {
   specialty: string;
   hospitalName: string;
+  hospitalId: string;
 }
 
 const getAllDoctorsWithSpecialties = (
@@ -21,6 +22,7 @@ const getAllDoctorsWithSpecialties = (
         ...doctor,
         specialty: specialty.name,
         hospitalName: hospital.name,
+        hospitalId: hospital._id as string,
       }))
     )
   );
@@ -135,7 +137,14 @@ const DoctorsPage: React.FC = () => {
                           {convertTo12HourFormat(schedule.end_time)}
                         </span>
                         <MapPin className="h-4 w-4 ml-2 mr-1" />
-                        <span>{doctor.hospitalName}</span>
+                        <span
+                          onClick={() =>
+                            navigate(`/services/hospitals/${doctor.hospitalId}`)
+                          }
+                          className="cursor-pointer"
+                        >
+                          {doctor.hospitalName}
+                        </span>
                       </div>
                     </div>
                   ))}
