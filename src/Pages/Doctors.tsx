@@ -145,9 +145,9 @@ const DoctorsPage: React.FC = () => {
                           onClick={() =>
                             navigate(`/services/hospitals/${doctor.hospitalId}`)
                           }
-                          className="cursor-pointer"
+                          className="cursor-pointer text-green-600"
                         >
-                          {doctor.hospitalName}
+                          <u>{doctor.hospitalName}</u>
                         </span>
                       </div>
                     </div>

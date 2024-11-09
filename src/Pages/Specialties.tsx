@@ -5,7 +5,7 @@ import {
   Search,
   Star,
   MapPin,
-  ArrowUpDown,
+  // ArrowUpDown,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Hospital, Review } from "../Redux/HospitalsData";
@@ -75,10 +75,6 @@ const SpecialtiesPage: React.FC = () => {
     null
   );
   const [searchTerm, setSearchTerm] = useState("");
-  const [sortCriteria, setSortCriteria] = useState<"rating" | "doctorCount">(
-    "rating"
-  );
-  const [sortOrder, setSortOrder] = useState<"asc" | "desc">("desc");
   const [filteredSpecialties, setFilteredSpecialties] = useState(specialties);
   const navigate = useNavigate();
 
@@ -99,20 +95,6 @@ const SpecialtiesPage: React.FC = () => {
 
   const navigateToHospital = (hospitalId: string) => {
     navigate(`/services/hospitals/${hospitalId}`);
-  };
-
-  const sortHospitals = (hospitals: HospitalDetails[]): HospitalDetails[] => {
-    return hospitals.sort((a, b) => {
-      if (sortOrder === "asc") {
-        return a[sortCriteria] - b[sortCriteria];
-      } else {
-        return b[sortCriteria] - a[sortCriteria];
-      }
-    });
-  };
-
-  const toggleSortOrder = () => {
-    setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
 
   return (
@@ -166,23 +148,9 @@ const SpecialtiesPage: React.FC = () => {
                   <h3 className="text-lg font-semibold text-green-700 mb-4">
                     Hospitals with {specialty.name}
                   </h3>
-                  <div className="flex justify-end mb-4">
-                    <button
-                      className="flex items-center text-green-700 hover:text-green-900"
-                      onClick={() => {
-                        setSortCriteria(
-                          sortCriteria === "rating" ? "doctorCount" : "rating"
-                        );
-                        toggleSortOrder();
-                      }}
-                    >
-                      Sort by{" "}
-                      {sortCriteria === "rating" ? "Rating" : "Doctor Count"}
-                      <ArrowUpDown className="ml-1 h-4 w-4" />
-                    </button>
-                  </div>
+
                   <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-                    {sortHospitals(specialty.hospitals).map((hospital) => (
+                    {specialty.hospitals.map((hospital) => (
                       <div
                         key={hospital.id}
                         className="bg-green-100 p-3 rounded-lg cursor-pointer hover:bg-green-200 transition-colors"
