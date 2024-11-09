@@ -95,7 +95,7 @@ const AmbulanceServicesPage: React.FC = () => {
   };
 
   const handleGoBack = () => {
-    navigate(-1);
+    navigate("/");
   };
 
   return (

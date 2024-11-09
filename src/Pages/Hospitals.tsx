@@ -24,7 +24,9 @@ const HospitalsPage = () => {
   const { hospitals = [] } = useSelector(
     (state: RootState) => state.hospitalData
   );
-const {latitude,longitude}=useSelector((state:RootState)=>state.userLogin)
+  const { latitude, longitude } = useSelector(
+    (state: RootState) => state.userLogin
+  );
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -89,14 +91,15 @@ const {latitude,longitude}=useSelector((state:RootState)=>state.userLogin)
   };
 
   if (loading) {
-    return <LoadingSpinner/>;
+    return <LoadingSpinner />;
   }
 
   const filteredAndSortedHospitals = hospitals
     .filter(
       (hospital: Hospital) =>
         hospital?.type?.toLowerCase() == HospitasType?.toLowerCase() &&
-        hospital.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
+        (hospital.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+          hospital.address.toLowerCase().includes(searchTerm.toLowerCase())) &&
         (!filterOpenNow || isOpenNow(hospital.working_hours))
     )
     .sort((a: Hospital, b: Hospital) => {
@@ -119,10 +122,13 @@ const {latitude,longitude}=useSelector((state:RootState)=>state.userLogin)
     <div className="min-h-screen bg-green-50">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        {/* <h1 className="text-3xl font-bold text-green-800 mb-6">Hospitals</h1> */}
-        <div className="relative mb-6 flex items-center justify-center">
-          <BackButton OnClick={() => navigate("/services/hospitals/types")} />
-          <h1 className="text-3xl font-bold text-green-800">Hospitals</h1>
+        <div className="relative mb-6">
+          <div className="flex items-center justify-start mt-3">
+            <BackButton OnClick={() => navigate("/services/hospitals/types")} />
+          </div>
+          <div className="flex items-center justify-center mt-4">
+            <h1 className="text-3xl font-bold text-green-800">Hospitals</h1>
+          </div>
         </div>
 
         <div className="mb-6 flex flex-wrap gap-4">

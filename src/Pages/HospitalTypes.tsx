@@ -62,17 +62,15 @@ const HospitalTypeCards: React.FC = () => {
   return (
     <div className="bg-green-50 py-4 px-2 sm:py-6 sm:px-4 h-screen">
       <div className="max-w-7xl mx-auto">
-        {/* <BackButton OnClick={()=>{}}/>
-        <h1 className="text-xl sm:text-3xl font-bold text-green-800 mb-10 sm:mb-10 text-center mt-6">
-          Hospital Types
-        </h1> */}
-        <div className="relative mb-10 flex items-center justify-center">
-          <BackButton
-            OnClick={() => {
-              navigate("/");
-            }}
-          />
-          <h1 className="text-3xl font-bold text-green-800">Hospital Types</h1>
+        <div className="relative mb-6">
+          <div className="flex items-center justify-start mt-3">
+            <BackButton OnClick={() => navigate("/")} />
+          </div>
+          <div className="flex items-center justify-center mt-4">
+            <h1 className="text-3xl font-bold text-green-800">
+              Hospital Types
+            </h1>
+          </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-5">
           {hospitalTypes.map((type, index) => (
