@@ -14,6 +14,7 @@ const PasswordReset: React.FC = () => {
   const [step, setStep] = useState(1);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+
   // For generating a random number.
   const [randomNumber, setRandomNumber] = useState("");
 
@@ -248,9 +249,15 @@ const PasswordReset: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <div className="relative mb-6 flex items-center justify-center">
-          <BackButton OnClick={() => navigate("/login")} />
-          <h2 className="text-3xl font-bold text-green-800">Reset Password</h2>
+        <div className="relative mb-6">
+          <div className="flex items-center justify-start mt-3">
+            <BackButton OnClick={() => navigate("/login")} />
+          </div>
+          <div className="flex items-center justify-center mt-4">
+            <h1 className="text-3xl font-bold text-green-800">
+              Reset Password
+            </h1>
+          </div>
         </div>
         {error && (
           <div className="mb-4 p-2 bg-red-100 border border-red-400 text-red-700 rounded flex items-center">

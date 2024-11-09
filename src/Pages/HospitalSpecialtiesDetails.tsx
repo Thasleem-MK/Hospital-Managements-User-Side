@@ -69,13 +69,17 @@ const DepartmentDoctorsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="relative mb-6 flex items-center justify-center">
-          <BackButton
-            OnClick={() => navigate(`/services/hospitals/${hospital?._id}`)}
-          />
-          <h1 className="text-3xl font-bold text-green-800">
-            {department.name}
-          </h1>
+        <div className="relative mb-6">
+          <div className="flex items-center justify-start mt-3">
+            <BackButton
+              OnClick={() => navigate(`/services/hospitals/${hospital?._id}`)}
+            />
+          </div>
+          <div className="flex items-center justify-center mt-4">
+            <h1 className="text-3xl font-bold text-green-800">
+              {department.name}
+            </h1>
+          </div>
         </div>
 
         <div className="space-y-6">

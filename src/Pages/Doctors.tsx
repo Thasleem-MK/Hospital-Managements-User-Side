@@ -81,9 +81,13 @@ const DoctorsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="relative mb-6 flex items-center justify-center">
-          <BackButton OnClick={handleGoBack} />
-          <h1 className="text-3xl font-bold text-green-800">Our Doctors</h1>
+        <div className="relative mb-6">
+          <div className="flex items-center justify-start mt-3">
+            <BackButton OnClick={handleGoBack} />
+          </div>
+          <div className="flex items-center justify-center mt-4">
+            <h1 className="text-3xl font-bold text-green-800">Our Doctors</h1>
+          </div>
         </div>
 
         <div className="mb-6 relative">

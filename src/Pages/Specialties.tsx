@@ -6,12 +6,12 @@ import {
   Star,
   MapPin,
   ArrowUpDown,
-  ArrowLeft,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Hospital, Review } from "../Redux/HospitalsData";
 import { useSelector } from "react-redux";
 import { RootState } from "../Redux/Store";
+import { BackButton } from "../Components/Common";
 
 interface HospitalDetails {
   id: string;
@@ -115,23 +115,18 @@ const SpecialtiesPage: React.FC = () => {
     setSortOrder(sortOrder === "asc" ? "desc" : "asc");
   };
 
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
   return (
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="flex items-center mb-6">
-          <button
-            onClick={handleGoBack}
-            className="mr-4 p-2 rounded-full bg-green-100 text-green-600 hover:bg-green-200 transition-colors duration-200"
-          >
-            <ArrowLeft className="h-6 w-6" />
-          </button>
-          <h1 className="text-3xl font-bold text-green-800">
-            Medical Specialties
-          </h1>
+        <div className="relative mb-6">
+          <div className="flex items-center justify-start mt-3">
+            <BackButton OnClick={() => navigate(-1)} />
+          </div>
+          <div className="flex items-center justify-center mt-4">
+            <h1 className="text-3xl font-bold text-green-800">
+              Medical Specialties
+            </h1>
+          </div>
         </div>
 
         <div className="mb-6 relative">
