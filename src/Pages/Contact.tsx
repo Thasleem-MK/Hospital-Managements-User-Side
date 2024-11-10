@@ -132,7 +132,7 @@ export default function ContactPage() {
             {submitStatus === "error" && (
               <div className="mt-4 p-2 bg-red-100 text-red-700 rounded-md">
                 There was an error submitting your message. Please try again
-                later.
+                later, Thank you.
               </div>
             )}
           </div>
