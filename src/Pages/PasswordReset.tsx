@@ -253,7 +253,7 @@ const PasswordReset: React.FC = () => {
           <div className="flex items-center justify-start mt-3">
             <BackButton OnClick={() => navigate("/login")} />
           </div>
-          <div className="flex items-center justify-center mt-4">
+          <div className="flex items-center justify-center mt-8">
             <h1 className="text-3xl font-bold text-green-800">
               Reset Password
             </h1>
