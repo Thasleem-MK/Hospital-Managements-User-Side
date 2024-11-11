@@ -249,14 +249,13 @@ const PasswordReset: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <div className="relative mb-6">
-          <div className="flex items-center justify-start mt-3">
+        <div className="relative mb-6 px-4 py-3">
+          <div className="flex items-center justify-between">
             <BackButton OnClick={() => navigate("/login")} />
-          </div>
-          <div className="flex items-center justify-center mt-8">
-            <h1 className="text-3xl font-bold text-green-800">
+            <h1 className="text-2xl md:text-3xl font-bold text-green-800 text-center flex-grow">
               Reset Password
             </h1>
+            <div className="w-10 md:w-12" aria-hidden="true"></div>
           </div>
         </div>
         {error && (

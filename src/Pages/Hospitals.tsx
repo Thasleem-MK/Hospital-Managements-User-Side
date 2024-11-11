@@ -122,12 +122,13 @@ const HospitalsPage = () => {
     <div className="min-h-screen bg-green-50">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        <div className="relative mb-6">
-          <div className="flex items-center justify-start mt-3">
+        <div className="relative mb-6 px-4 py-3">
+          <div className="flex items-center justify-between">
             <BackButton OnClick={() => navigate("/services/hospitals/types")} />
-          </div>
-          <div className="flex items-center justify-center mt-8">
-            <h1 className="text-3xl font-bold text-green-800">Hospitals</h1>
+            <h1 className="text-2xl md:text-3xl font-bold text-green-800 text-center flex-grow">
+              Hospitals
+            </h1>
+            <div className="w-10 md:w-12" aria-hidden="true"></div>
           </div>
         </div>
 
