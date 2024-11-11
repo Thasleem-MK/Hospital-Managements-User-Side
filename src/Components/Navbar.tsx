@@ -49,14 +49,14 @@ const MobileMenu = ({ isOpen, onClose, children }: MobileMenuProps) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
-      <div className="fixed right-0 top-0 h-fit w-64 bg-white text-green-600 shadow-lg p-4">
+      <div className="fixed right-0 top-0 h-fit w-fit bg-green-600 text-white shadow-lg p-4">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
         >
           <X className="h-6 w-6" />
         </button>
-        <div className="mt-12">{children}</div>
+        <div className="mt-6">{children}</div>
       </div>
     </div>
   );
@@ -108,7 +108,9 @@ export default function Navbar() {
     <nav className="bg-green-600 text-white p-4 shadow-md">
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
-          <h1 className="text-2xl font-bold">Hosta</h1>
+          <Link to="/">
+            <h1 className="text-2xl font-bold">Hosta</h1>
+          </Link>
           <div className="hidden md:flex space-x-4 items-center">
             {navItems.map((item) => (
               <NavItem
