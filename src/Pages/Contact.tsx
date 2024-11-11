@@ -8,8 +8,7 @@ import {
   Mail,
   Facebook,
   Instagram,
-  Linkedin,
-  Youtube,
+  MessageCircle,
 } from "lucide-react";
 
 export default function ContactPage() {
@@ -144,15 +143,24 @@ export default function ContactPage() {
             <div className="space-y-4">
               <div className="flex items-center">
                 <Phone className="h-6 w-6 text-green-600 mr-2" />
-                <span className="text-green-700">Emergency: 911</span>
-              </div>
-              <div className="flex items-center">
-                <Phone className="h-6 w-6 text-green-600 mr-2" />
-                <span className="text-green-700">General: (123) 456-7890</span>
+                <span className="text-green-700">Phone: 8714412090</span>
               </div>
               <div className="flex items-center">
                 <Mail className="h-6 w-6 text-green-600 mr-2" />
-                <span className="text-green-700">info@ourhospital.com</span>
+                <span className="text-green-700">
+                  Email: hostahealthcare@gmail.com
+                </span>
+              </div>
+              <div className="flex items-center">
+                <MessageCircle className="h-6 w-6 text-green-600 mr-2" />
+                <a
+                  href="https://wa.me/918714412090"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-green-700 hover:text-green-800 cursor-pointer"
+                >
+                  WhatsApp: 8714412090
+                </a>
               </div>
             </div>
             <h3 className="text-xl font-semibold text-green-700 mt-6 mb-3">
@@ -160,7 +168,7 @@ export default function ContactPage() {
             </h3>
             <div className="flex space-x-4">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61566955145072&mibextid=LQQJ4d&rdid=rUkuyexGh2CyFoDD&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1CL6WSxXSq%2F%3Fmibextid%3DLQQJ4d#"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-green-600 hover:text-green-700"
@@ -168,29 +176,14 @@ export default function ContactPage() {
                 <Facebook className="h-6 w-6" />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/hosta_healthcare/?igsh=MnR6d3h0YTJlbXEy"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-green-600 hover:text-green-700"
               >
                 <Instagram className="h-6 w-6" />
               </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-green-600 hover:text-green-700"
-              >
-                <Linkedin className="h-6 w-6" />
-              </a>
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-green-600 hover:text-green-700"
-              >
-                <Youtube className="h-6 w-6" />
-              </a>
+              <a href=""></a>
             </div>
           </div>
         </div>

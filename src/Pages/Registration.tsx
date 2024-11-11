@@ -113,16 +113,14 @@ const UserRegistration: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        {/* <div className="relative mb-6 flex items-center justify-center">
-          <BackButton OnClick={() => navigate("/")} />
-          <h2 className="text-3xl font-bold text-green-800">User Login</h2>
-        </div> */}
         <div className="relative mb-6">
           <div className="flex items-center justify-start mt-3">
             <BackButton OnClick={() => navigate("/")} />
           </div>
           <div className="flex items-center justify-center mt-4">
-            <h1 className="text-3xl font-bold text-green-800">User Registration</h1>
+            <h1 className="text-3xl font-bold text-green-800">
+              User Registration
+            </h1>
           </div>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -269,6 +267,15 @@ const UserRegistration: React.FC = () => {
             >
               Login
             </Link>
+          </p>
+          <p className="text-sm text-green-700">
+            <a
+              href="https://hospital-management-hospital-side.vercel.app/privacy"
+              target="_blank"
+              className="text-xs underline"
+            >
+              privacy & policy
+            </a>
           </p>
         </div>
       </div>
