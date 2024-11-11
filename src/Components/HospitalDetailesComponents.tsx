@@ -1,5 +1,5 @@
 import { Calendar, Mail, MapPin, Phone, Send, Star } from "lucide-react";
-import {  useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Hospital,
@@ -59,8 +59,8 @@ export const Info = ({ hospital }: { hospital: Hospital }) => {
       <div className="flex items-center">
         <Star className="h-5 w-5 text-green-600 mr-2" />
         <span>
-          {!ratingPersentage?0:(ratingPersentage / 100) * 5} out of 5 stars (based on{" "}
-          {hospital?.reviews.length} reviews)
+          {!ratingPersentage ? 0 : (ratingPersentage / 100) * 5} out of 5 stars
+          (based on {hospital?.reviews.length} reviews)
         </span>
       </div>
       <div className="mt-6">
@@ -254,6 +254,11 @@ import { ISTTime } from "./IndianTime";
 export const ReviewComponent = ({ hospital }: { hospital: Hospital }) => {
   const dispatch = useDispatch();
   const { _id } = useSelector((state: RootState) => state.userLogin);
+  useEffect(() => {
+    if (!_id) {
+      navigate("/login");
+    }
+  }, [dispatch, _id]);
 
   const [newReview, setNewReview] = useState<
     Omit<Review, "_id" | "user_id" | "date">
