@@ -49,7 +49,7 @@ const MobileMenu = ({ isOpen, onClose, children }: MobileMenuProps) => {
   if (!isOpen) return null;
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50">
-      <div className="fixed right-0 top-0 h-fit w-fit bg-green-600 text-white shadow-lg p-4">
+      <div className="fixed right-0 top-0 h-fit w-fit bg-green-600 text-white shadow-lg p-4 px-10 rounded-bl-md">
         <button
           onClick={onClose}
           className="absolute top-4 right-4 text-gray-500 hover:text-gray-700"
