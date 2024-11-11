@@ -10,7 +10,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Search, Clock, Star, Phone } from "lucide-react";
 import Navbar from "../Components/Navbar";
 import { RootState } from "../Redux/Store";
-import { BackButton, FormInput } from "../Components/Common";
+import { FormInput, Header } from "../Components/Common";
 import LoadingSpinner from "../Components/LoadingSpinner";
 
 const HospitalsPage = () => {
@@ -122,15 +122,10 @@ const HospitalsPage = () => {
     <div className="min-h-screen bg-green-50">
       <Navbar />
       <main className="container mx-auto px-4 py-8">
-        <div className="relative mb-6 px-4 py-3">
-          <div className="flex items-center justify-between">
-            <BackButton OnClick={() => navigate("/services/hospitals/types")} />
-            <h1 className="text-2xl md:text-3xl font-bold text-green-800 text-center flex-grow">
-              Hospitals
-            </h1>
-            <div className="w-10 md:w-12" aria-hidden="true"></div>
-          </div>
-        </div>
+        <Header
+          onBackClick={() => navigate("/services/hospitals/types")}
+          title="Hospitals"
+        />
 
         <div className="mb-6 flex flex-wrap gap-4">
           <div className="flex-grow">

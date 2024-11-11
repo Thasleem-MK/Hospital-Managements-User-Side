@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../Redux/Store";
 import { AmbulanceService } from "../Redux/AmbulanceData";
-import { BackButton } from "../Components/Common";
+import {Header} from "../Components/Common";
 
 const AmbulanceServicesPage: React.FC = () => {
   const ambulanceServices = useSelector(
@@ -95,15 +95,7 @@ const AmbulanceServicesPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="relative mb-6 px-4 py-3">
-          <div className="flex items-center justify-between">
-            <BackButton OnClick={handleGoBack} />
-            <h1 className="text-2xl md:text-3xl font-bold text-green-800 text-center flex-grow">
-              Ambulance Services
-            </h1>
-            <div className="w-10 md:w-12" aria-hidden="true"></div>
-          </div>
-        </div>
+        <Header onBackClick={handleGoBack} title="Ambulance Services" />
 
         <div className="mb-6 relative">
           <input

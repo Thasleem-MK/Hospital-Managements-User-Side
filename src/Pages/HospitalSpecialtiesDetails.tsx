@@ -10,7 +10,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../Redux/Store";
-import { BackButton } from "../Components/Common";
+import { Header } from "../Components/Common";
 import { convertTo12HourFormat } from "../Components/HospitalDetailesComponents";
 import { Hospital, Specialty } from "../Redux/HospitalsData";
 
@@ -69,18 +69,11 @@ const DepartmentDoctorsPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="relative mb-6 px-4 py-3">
-          <div className="flex items-center justify-between">
-            <BackButton
-              OnClick={() => () =>
-                navigate(`/services/hospitals/${hospital?._id}`)}
-            />
-            <h1 className="text-2xl md:text-3xl font-bold text-green-800 text-center flex-grow">
-              {department.name}
-            </h1>
-            <div className="w-10 md:w-12" aria-hidden="true"></div>
-          </div>
-        </div>
+        <Header
+          onBackClick={() => () =>
+            navigate(`/services/hospitals/${hospital?._id}`)}
+          title={department.name}
+        />
 
         <div className="space-y-6">
           {department.doctors.map((doctor) => (
