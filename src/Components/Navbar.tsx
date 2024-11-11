@@ -44,8 +44,9 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`hover:text-green-200 transition-colors ${pathname === item.path ? "font-bold text-green-950" : ""
-                  }`}
+                className={`hover:text-green-200 transition-colors ${
+                  pathname === item.path ? "font-bold text-green-950" : ""
+                }`}
               >
                 {item.name}
               </Link>
@@ -89,7 +90,7 @@ export default function Navbar() {
             )}
           </div>
           <button
-            className="md:hidden text-white focus:outline-none"
+            className="md:hidden focus:outline-none"
             onClick={toggleMobileMenu}
           >
             {isMobileMenuOpen ? (
@@ -105,8 +106,9 @@ export default function Navbar() {
               <Link
                 key={item.name}
                 to={item.path}
-                className={`block py-2 hover:text-green-200 transition-colors ${pathname === item.path ? "font-bold text-green-950" : ""
-                  }`}
+                className={`block py-2 hover:text-green-200 transition-colors ${
+                  pathname === item.path ? "font-bold text-green-950" : ""
+                }`}
                 onClick={toggleMobileMenu}
               >
                 {item.name}
