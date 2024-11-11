@@ -33,6 +33,19 @@ function App() {
         );
         const ambulances = await apiClient.get("/api/ambulances");
         dispatch(setAmbulances(ambulances.data.data));
+        const user = await apiClient.get("/api/users", {
+          withCredentials: true,
+        });
+        const { email, name, phone, password, _id } = user.data.data;
+        dispatch(
+          updateUserData({
+            email: email,
+            name: name,
+            password: password,
+            phone: phone,
+            _id: _id as string,
+          })
+        );
       } catch (err) {
         console.error(err);
       }

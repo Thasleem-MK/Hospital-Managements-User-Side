@@ -8,7 +8,6 @@ export interface UserData {
   phone?: string;
   latitude?: number;
   longitude?: number;
-  isLogin?: boolean;
 }
 
 const InitialState: UserData = {
@@ -17,7 +16,6 @@ const InitialState: UserData = {
   email: "",
   password: "",
   phone: "",
-  isLogin: false,
 };
 
 const userLoginSlice = createSlice({
@@ -33,7 +31,6 @@ const userLoginSlice = createSlice({
       state.phone = phone || state.phone;
       state.latitude = latitude || state.latitude;
       state.longitude = longitude || state.longitude;
-      state.isLogin = true;
     },
 
     logoutUser: (state) => {
@@ -42,7 +39,6 @@ const userLoginSlice = createSlice({
       state.email = "";
       state.password = "";
       state.phone = "";
-      state.isLogin = false;
     },
   },
 });

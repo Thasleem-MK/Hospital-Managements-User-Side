@@ -1,5 +1,5 @@
 import { Calendar, Mail, MapPin, Phone, Send, Star } from "lucide-react";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
   Hospital,
@@ -250,33 +250,10 @@ import { Edit2, ChevronDown, ChevronUp } from "lucide-react";
 import { ReviewButton, Textarea } from "./Common";
 import { RootState } from "../Redux/Store";
 import { ISTTime } from "./IndianTime";
-import { updateUserData } from "../Redux/userData";
 
 export const ReviewComponent = ({ hospital }: { hospital: Hospital }) => {
   const dispatch = useDispatch();
   const { _id } = useSelector((state: RootState) => state.userLogin);
-
-  useEffect(() => {
-    const data = async () => {
-      await apiClient
-        .get("/api/users", { withCredentials: true })
-        .then((result) => {
-          const { email, name, phone, password, _id } = result.data.data;
-          dispatch(
-            updateUserData({
-              email: email,
-              name: name,
-              password: password,
-              phone: phone,
-              _id: _id as string,
-              isLogin: true,
-            })
-          );
-        })
-        .catch((err) => console.log("err in getting user login", err));
-    };
-    data();
-  }, []);
 
   const [newReview, setNewReview] = useState<
     Omit<Review, "_id" | "user_id" | "date">

@@ -6,7 +6,6 @@ import { successToast } from "../Components/Toastify";
 import { useDispatch } from "react-redux";
 import { updateUserData } from "../Redux/userData";
 import { BackButton, FormInput } from "../Components/Common";
-import { setHospitalData } from "../Redux/HospitalsData";
 
 const UserLogin: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -32,6 +31,7 @@ const UserLogin: React.FC = () => {
       )
       .then(async (result) => {
         successToast("Login successful");
+        localStorage.setItem("accessToken", result.data.token);
         const { email, name, phone, password, _id } = result.data.data;
         dispatch(
           updateUserData({
@@ -40,14 +40,8 @@ const UserLogin: React.FC = () => {
             password: password,
             phone: phone,
             _id: _id as string,
-            isLogin: true,
           })
         );
-
-        await apiClient
-          .get("/api/hospitals")
-          .then((data) => dispatch(setHospitalData({ data: data.data })))
-          .catch((err) => console.log(err));
         navigate("/");
       })
       .catch((err) => {
