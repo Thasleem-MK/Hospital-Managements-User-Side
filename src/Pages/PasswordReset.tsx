@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Mail, Lock, CheckCircle, AlertCircle, ArrowLeft } from "lucide-react";
 import { apiClient } from "../Components/Axios";
-import { BackButton, FormInput } from "../Components/Common";
+import { FormInput, Header } from "../Components/Common";
 import { useNavigate } from "react-router-dom";
 
 const PasswordReset: React.FC = () => {
@@ -249,15 +249,7 @@ const PasswordReset: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <div className="relative mb-6 px-4 py-3">
-          <div className="flex items-center justify-between">
-            <BackButton OnClick={() => navigate("/login")} />
-            <h1 className="text-2xl md:text-3xl font-bold text-green-800 text-center flex-grow">
-              Reset Password
-            </h1>
-            <div className="w-10 md:w-12" aria-hidden="true"></div>
-          </div>
-        </div>
+        <Header onBackClick={() => navigate("/login")} title="Reset Password" />
         {error && (
           <div className="mb-4 p-2 bg-red-100 border border-red-400 text-red-700 rounded flex items-center">
             <AlertCircle className="mr-2" size={18} />

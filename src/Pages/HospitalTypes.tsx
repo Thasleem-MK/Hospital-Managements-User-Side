@@ -1,5 +1,5 @@
 import React from "react";
-import { BackButton } from "../Components/Common";
+import { Header } from "../Components/Common";
 import { Link, useNavigate } from "react-router-dom";
 
 interface HospitalType {
@@ -62,15 +62,7 @@ const HospitalTypeCards: React.FC = () => {
   return (
     <div className="bg-green-50 py-4 px-2 sm:py-6 sm:px-4 h-screen">
       <div className="max-w-7xl mx-auto">
-        <div className="relative mb-6 px-4 py-3">
-          <div className="flex items-center justify-between">
-            <BackButton OnClick={() => navigate("/")} />
-            <h1 className="text-2xl md:text-3xl font-bold text-green-800 text-center flex-grow">
-              Hospital Types
-            </h1>
-            <div className="w-10 md:w-12" aria-hidden="true"></div>
-          </div>
-        </div>
+        <Header onBackClick={() => navigate("/")} title="Hospiatl Types" />
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-5">
           {hospitalTypes.map((type, index) => (
             <Link to={`/services/hospitals?type=${type.title}`}>

@@ -31,10 +31,27 @@ export const FormInput = ({
   );
 };
 
-export const BackButton = ({ OnClick }: { OnClick: any }) => {
+// export const BackButton = ({ OnClick }: { OnClick: any }) => {
+//   return (
+//     <button
+//       onClick={OnClick}
+//       className="p-2 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition-colors"
+//       aria-label="Go back"
+//     >
+//       <ArrowLeft className="h-6 w-6" />
+//     </button>
+//   );
+// };
+
+// Back button
+interface BackButtonProps {
+  onClick: () => void;
+}
+
+const BackButton: React.FC<BackButtonProps> = ({ onClick }) => {
   return (
     <button
-      onClick={OnClick}
+      onClick={onClick}
       className="p-2 bg-green-100 text-green-600 rounded-full hover:bg-green-200 transition-colors"
       aria-label="Go back"
     >
@@ -42,6 +59,25 @@ export const BackButton = ({ OnClick }: { OnClick: any }) => {
     </button>
   );
 };
+
+interface HeaderProps {
+  title: string;
+  onBackClick: () => void;
+}
+
+export function Header({ title, onBackClick }: HeaderProps) {
+  return (
+    <div className="relative mb-6 px-4 py-3">
+      <div className="flex items-center justify-between">
+        <BackButton onClick={onBackClick} />
+        <h1 className="text-2xl md:text-3xl font-bold text-green-800 text-center flex-grow">
+          {title}
+        </h1>
+        <div className="w-10 md:w-12" aria-hidden="true"></div>
+      </div>
+    </div>
+  );
+}
 
 // Text Area And Button for Uere Review Component
 import { TextareaHTMLAttributes, forwardRef } from "react";

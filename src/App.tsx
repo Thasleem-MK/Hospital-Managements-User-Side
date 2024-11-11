@@ -19,6 +19,7 @@ import HospitalTypeCards from "./Pages/HospitalTypes";
 import { getCurrentLocation } from "./Components/getCurrentLocation";
 import { updateUserData } from "./Redux/userData";
 import { setAmbulances } from "./Redux/AmbulanceData";
+import NotFound from "./Pages/NotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -74,6 +75,7 @@ function App() {
           <Route path="specialties" element={<SpecialtiesPage />} />
           <Route path="ambulance" element={<AmbulanceServicesPage />} />
         </Route>
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </>
   );

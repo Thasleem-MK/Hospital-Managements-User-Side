@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Hospital, Review } from "../Redux/HospitalsData";
 import { useSelector } from "react-redux";
 import { RootState } from "../Redux/Store";
-import { BackButton } from "../Components/Common";
+import { Header } from "../Components/Common";
 
 interface HospitalDetails {
   id: string;
@@ -100,15 +100,7 @@ const SpecialtiesPage: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
-        <div className="relative mb-6 px-4 py-3">
-          <div className="flex items-center justify-between">
-            <BackButton OnClick={() => navigate(-1)} />
-            <h1 className="text-2xl md:text-3xl font-bold text-green-800 text-center flex-grow">
-              Medical Specialties
-            </h1>
-            <div className="w-10 md:w-12" aria-hidden="true"></div>
-          </div>
-        </div>
+        <Header onBackClick={() => navigate(-1)} title="Medical Specialties" />
 
         <div className="mb-6 relative">
           <input

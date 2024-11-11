@@ -13,7 +13,7 @@ import {
 } from "../Redux/userRegistration";
 import { FormData } from "../Redux/userRegistration";
 import { errorToast, successToast } from "../Components/Toastify";
-import { BackButton, FormInput } from "../Components/Common";
+import { FormInput, Header } from "../Components/Common";
 
 const UserRegistration: React.FC = () => {
   const { formData, otp, otpSent, randomOtp } = useSelector(
@@ -114,15 +114,7 @@ const UserRegistration: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        <div className="relative mb-6 px-4 py-3">
-          <div className="flex items-center justify-between">
-            <BackButton OnClick={() => navigate("/")} />
-            <h1 className="text-2xl md:text-3xl font-bold text-green-800 text-center flex-grow">
-              User Registration
-            </h1>
-            <div className="w-10 md:w-12" aria-hidden="true"></div>
-          </div>
-        </div>
+        <Header onBackClick={() => navigate("/")} title="User Registration" />
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label
