@@ -126,7 +126,7 @@ const HospitalsPage = () => {
           <div className="flex items-center justify-start mt-3">
             <BackButton OnClick={() => navigate("/services/hospitals/types")} />
           </div>
-          <div className="flex items-center justify-center mt-4">
+          <div className="flex items-center justify-center mt-8">
             <h1 className="text-3xl font-bold text-green-800">Hospitals</h1>
           </div>
         </div>

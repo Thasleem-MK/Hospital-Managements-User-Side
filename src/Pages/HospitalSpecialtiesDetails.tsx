@@ -75,7 +75,7 @@ const DepartmentDoctorsPage: React.FC = () => {
               OnClick={() => navigate(`/services/hospitals/${hospital?._id}`)}
             />
           </div>
-          <div className="flex items-center justify-center mt-4">
+          <div className="flex items-center justify-center mt-8">
             <h1 className="text-3xl font-bold text-green-800">
               {department.name}
             </h1>

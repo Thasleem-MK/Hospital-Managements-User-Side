@@ -53,10 +53,6 @@ const UserLogin: React.FC = () => {
   return (
     <div className="min-h-screen bg-green-50 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-lg shadow-md p-8">
-        {/* <div className="relative mb-6 flex items-center justify-center">
-          <BackButton OnClick={() => navigate("/")} />
-          <h2 className="text-3xl font-bold text-green-800">User Login</h2>
-        </div> */}
         <div className="relative mb-6">
           <div className="flex items-center justify-start mt-3">
             <BackButton OnClick={() => navigate("/")} />
