@@ -1,11 +1,12 @@
 {
   "name": "Hosta",
   "short_name": "Hosta",
-  "description": "Your App Description",
+  "description": "Connect to Hospitals",
   "theme_color": "#5d4d28",
   "background_color": "#ffffff",
   "display": "standalone",
   "start_url": "/",
+  "orientation": "portrait",
   "icons": [
     {
       "src": "public/manifest-icon-192.maskable.png",
