@@ -70,7 +70,7 @@ const DepartmentDoctorsPage: React.FC = () => {
     <div className="min-h-screen bg-green-50 p-4 md:p-8">
       <div className="max-w-4xl mx-auto">
         <Header
-          onBackClick={() => () =>
+          onBackClick={() =>
             navigate(`/services/hospitals/${hospital?._id}`)}
           title={department.name}
         />
