@@ -3,10 +3,6 @@
         {
             "source": "/(.*)",
             "destination": "/"
-        },
-        {
-            "source": "/:file((.*)\\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|txt))",
-            "destination": "/:file"
         }
     ]
 }
