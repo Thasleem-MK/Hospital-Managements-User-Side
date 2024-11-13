@@ -13,7 +13,9 @@
   "backgroundColor": "#FFFFFF",
   "enableNotifications": true,
   "startUrl": "/",
-  "iconUrl": "https://hospital-managements.vercel.app/public/manifest-icon-512.maskable.png",
+  "iconUrl": "https://res.cloudinary.com/dupevol0e/image/upload/v1731495893/manifest-icon-512.maskable_qkphyz.png",
+  "maskableIconUrl": "https://res.cloudinary.com/dupevol0e/image/upload/v1731495893/manifest-icon-512.maskable_qkphyz.png",
+  "monochromeIconUrl": "https://res.cloudinary.com/dupevol0e/image/upload/v1731495893/manifest-icon-512.maskable_qkphyz.png",
   "splashScreenFadeOutDuration": 300,
   "signingKey": {
     "path": "C:\\Users\\moham\\Desktop\\Hosta\\Web\\UserSide\\android.keystore",
