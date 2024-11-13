@@ -5,8 +5,8 @@
             "destination": "/"
         },
         {
-            "source": "/(.*\\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|txt))",
-            "destination": "$1"
+            "source": "/:file((.*)\\.(png|jpg|jpeg|gif|svg|webp|ico|css|js|txt))",
+            "destination": "/:file"
         }
     ]
 }
