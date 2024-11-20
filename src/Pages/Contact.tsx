@@ -31,7 +31,7 @@ export default function ContactPage() {
         from: email,
         to: "hostahealthcare@gmail.com",
         subject: `Review from: ${email}`,
-        text: `Rating:${rating}${(<br />)} Opinion:${opinion}`,
+        text: `Rating:${rating} Opinion:${opinion}`,
       })
       .then(() => {
         setSubmitStatus("success");
