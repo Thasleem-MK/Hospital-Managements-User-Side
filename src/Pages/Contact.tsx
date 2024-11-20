@@ -10,6 +10,7 @@ import {
   Instagram,
   MessageCircle,
 } from "lucide-react";
+import { apiClient } from "../Components/Axios";
 
 export default function ContactPage() {
   const [email, setEmail] = useState("");
@@ -25,26 +26,23 @@ export default function ContactPage() {
     setSubmitting(true);
     setSubmitStatus(null);
 
-    try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, opinion, rating }),
-      });
-
-      if (response.ok) {
+    await apiClient
+      .post("/api/email", {
+        from: email,
+        to: "hostahealthcare@gmail.com",
+        subject: `Review from: ${email}`,
+        text: `Rating:${rating}${(<br />)} Opinion:${opinion}`,
+      })
+      .then(() => {
         setSubmitStatus("success");
         setEmail("");
         setOpinion("");
         setRating(0);
-      } else {
+      })
+      .catch((err) => {
+        console.log(err);
         setSubmitStatus("error");
-      }
-    } catch (error) {
-      setSubmitStatus("error");
-    }
+      });
 
     setSubmitting(false);
   };

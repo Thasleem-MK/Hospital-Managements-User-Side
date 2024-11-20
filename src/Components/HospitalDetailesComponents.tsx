@@ -244,7 +244,6 @@ export const WorkingHours = ({ hospital }: { hospital: Hospital }) => {
 //   );
 // };
 
-("use client");
 
 import { Edit2, ChevronDown, ChevronUp } from "lucide-react";
 import { ReviewButton, Textarea } from "./Common";

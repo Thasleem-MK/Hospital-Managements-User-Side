@@ -36,7 +36,6 @@ export default function HomePage() {
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 3000,
-    // beforeChange: (_: any, next: any) => setCurrentSlide(next),
   };
 
   return (
