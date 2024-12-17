@@ -5,7 +5,6 @@ import {
   Search,
   Star,
   MapPin,
-  // ArrowUpDown,
 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Hospital, Review } from "../Redux/HospitalsData";
